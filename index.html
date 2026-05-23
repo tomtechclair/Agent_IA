@@ -2,8 +2,8 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>AI Assistant Pro - Paramètres IA</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
+    <title>AI Assistant Pro - Mobile</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
@@ -25,21 +25,19 @@
             --hover-bg: #e5e5e5;
             --accent: #10a37f;
             --accent-hover: #1a7f64;
-            --danger: #ef4444;
-            --shadow: 0 1px 2px rgba(0,0,0,0.05);
+            --shadow: 0 2px 8px rgba(0,0,0,0.05);
         }
 
         [data-theme="dark"] {
-            --bg-primary: #343541;
-            --bg-secondary: #444654;
-            --bg-sidebar: #202123;
+            --bg-primary: #1e1e2e;
+            --bg-secondary: #2a2a36;
+            --bg-sidebar: #181822;
             --text-primary: #ececec;
-            --text-secondary: #acacbe;
-            --border: #4e4f60;
-            --user-msg: #343541;
-            --ai-msg: #444654;
-            --hover-bg: #2a2b32;
-            --accent: #10a37f;
+            --text-secondary: #9ca3af;
+            --border: #3a3a4a;
+            --user-msg: #1e1e2e;
+            --ai-msg: #2a2a36;
+            --hover-bg: #2f2f3e;
         }
 
         body {
@@ -48,23 +46,34 @@
             color: var(--text-primary);
             height: 100vh;
             overflow: hidden;
-            transition: background 0.2s, color 0.2s;
+            -webkit-tap-highlight-color: transparent;
         }
 
+        /* Layout mobile first */
         .app {
             display: flex;
             height: 100vh;
+            position: relative;
         }
 
-        /* Sidebar */
+        /* Sidebar mobile */
         .sidebar {
+            position: fixed;
+            left: -280px;
+            top: 0;
             width: 280px;
+            height: 100%;
             background: var(--bg-sidebar);
             border-right: 1px solid var(--border);
             display: flex;
             flex-direction: column;
-            transition: all 0.3s;
-            z-index: 10;
+            transition: left 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            z-index: 100;
+            box-shadow: 2px 0 20px rgba(0,0,0,0.1);
+        }
+
+        .sidebar.open {
+            left: 0;
         }
 
         .sidebar-header {
@@ -76,7 +85,7 @@
             display: flex;
             align-items: center;
             gap: 10px;
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             font-weight: 700;
             background: linear-gradient(135deg, var(--accent), #8b5cf6);
             -webkit-background-clip: text;
@@ -90,7 +99,7 @@
             background: var(--accent);
             border: none;
             border-radius: 40px;
-            padding: 10px;
+            padding: 12px;
             color: white;
             font-weight: 500;
             cursor: pointer;
@@ -98,9 +107,10 @@
             align-items: center;
             justify-content: center;
             gap: 8px;
+            font-size: 0.85rem;
         }
 
-        /* Paramètres IA */
+        /* Paramètres */
         .settings-section {
             padding: 16px;
             border-bottom: 1px solid var(--border);
@@ -117,7 +127,7 @@
         }
 
         .setting-item {
-            margin-bottom: 12px;
+            margin-bottom: 14px;
         }
 
         .setting-label {
@@ -134,13 +144,12 @@
             -webkit-appearance: none;
             background: var(--border);
             border-radius: 5px;
-            outline: none;
         }
 
         input[type="range"]::-webkit-slider-thumb {
             -webkit-appearance: none;
-            width: 14px;
-            height: 14px;
+            width: 16px;
+            height: 16px;
             background: var(--accent);
             border-radius: 50%;
             cursor: pointer;
@@ -149,7 +158,6 @@
         .mode-buttons {
             display: flex;
             gap: 8px;
-            margin-top: 8px;
         }
 
         .mode-btn {
@@ -157,10 +165,9 @@
             background: var(--bg-primary);
             border: 1px solid var(--border);
             border-radius: 30px;
-            padding: 6px;
+            padding: 8px 4px;
             font-size: 0.7rem;
             cursor: pointer;
-            transition: all 0.2s;
             color: var(--text-secondary);
         }
 
@@ -178,12 +185,15 @@
         }
 
         .history-item {
-            padding: 10px 12px;
-            border-radius: 8px;
+            padding: 12px;
+            border-radius: 10px;
             cursor: pointer;
             font-size: 0.85rem;
             color: var(--text-secondary);
             margin-bottom: 4px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .history-item:hover, .history-item.active {
@@ -191,7 +201,6 @@
             color: var(--text-primary);
         }
 
-        /* Footer sidebar */
         .sidebar-footer {
             padding: 16px;
             border-top: 1px solid var(--border);
@@ -202,55 +211,88 @@
             background: var(--bg-primary);
             border: 1px solid var(--border);
             border-radius: 40px;
-            padding: 8px;
+            padding: 10px;
             cursor: pointer;
             color: var(--text-secondary);
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 8px;
+            font-size: 0.8rem;
         }
 
-        /* Main */
+        /* Main content */
         .main {
             flex: 1;
             display: flex;
             flex-direction: column;
             overflow: hidden;
+            width: 100%;
         }
 
         .header {
-            padding: 16px 24px;
+            padding: 12px 16px;
             border-bottom: 1px solid var(--border);
+            background: var(--bg-primary);
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: var(--bg-primary);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .menu-btn {
+            background: none;
+            border: none;
+            font-size: 1.3rem;
+            cursor: pointer;
+            color: var(--text-primary);
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .mode-indicator {
             background: var(--accent);
-            padding: 4px 12px;
+            padding: 5px 12px;
             border-radius: 20px;
             font-size: 0.7rem;
             color: white;
         }
 
+        .new-mobile-btn {
+            background: var(--accent);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Messages */
         .chat-area {
             flex: 1;
             overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
         }
 
         .messages-container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px 24px;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
         }
 
         .message {
             display: flex;
-            gap: 16px;
-            padding: 16px 0;
+            gap: 12px;
             animation: fadeIn 0.3s ease;
         }
 
@@ -259,27 +301,36 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        .message.user { justify-content: flex-end; }
-        .message.user .message-avatar { background: var(--accent); order: 2; }
-        .message.ai .message-avatar { background: #8b5cf6; }
+        .message.user {
+            justify-content: flex-end;
+        }
 
         .message-avatar {
             width: 32px;
             height: 32px;
-            border-radius: 8px;
+            border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 16px;
+            font-size: 14px;
             flex-shrink: 0;
         }
 
+        .message.user .message-avatar {
+            background: var(--accent);
+            order: 2;
+        }
+
+        .message.ai .message-avatar {
+            background: #8b5cf6;
+        }
+
         .message-bubble {
-            max-width: 70%;
-            padding: 12px 18px;
+            max-width: 80%;
+            padding: 10px 14px;
             border-radius: 18px;
-            line-height: 1.5;
-            font-size: 0.9rem;
+            line-height: 1.45;
+            font-size: 0.85rem;
         }
 
         .message.user .message-bubble {
@@ -296,28 +347,27 @@
 
         .message-bubble pre {
             background: var(--bg-primary);
-            padding: 12px;
+            padding: 10px;
             border-radius: 10px;
             overflow-x: auto;
-            margin: 8px 0;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
+            margin: 6px 0;
         }
 
+        /* Input */
         .input-area {
-            padding: 20px 24px;
+            padding: 12px 16px;
             background: var(--bg-primary);
             border-top: 1px solid var(--border);
         }
 
         .input-wrapper {
-            max-width: 800px;
-            margin: 0 auto;
             display: flex;
-            gap: 12px;
+            gap: 10px;
             background: var(--bg-secondary);
             border: 1px solid var(--border);
-            border-radius: 28px;
-            padding: 8px 16px;
+            border-radius: 30px;
+            padding: 6px 12px;
         }
 
         .input-wrapper:focus-within {
@@ -334,23 +384,26 @@
             resize: none;
             outline: none;
             padding: 10px 0;
-            max-height: 120px;
+            max-height: 100px;
         }
 
         .send-btn {
             background: var(--accent);
             border: none;
-            width: 40px;
-            height: 40px;
+            width: 38px;
+            height: 38px;
             border-radius: 50%;
             cursor: pointer;
             color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .typing {
             display: flex;
             gap: 5px;
-            padding: 12px 18px;
+            padding: 10px 14px;
             background: var(--bg-secondary);
             width: fit-content;
             border-radius: 18px;
@@ -369,59 +422,63 @@
             30%{transform:translateY(-6px)}
         }
 
-        .menu-btn {
+        /* Overlay */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 99;
             display: none;
-            background: none;
-            border: none;
-            font-size: 1.2rem;
-            cursor: pointer;
-            color: var(--text-primary);
         }
 
-        @media (max-width: 768px) {
-            .sidebar {
-                position: fixed;
-                left: -280px;
-                height: 100%;
-            }
-            .sidebar.open { left: 0; }
-            .menu-btn { display: block; }
-            .message-bubble { max-width: 85%; }
+        .overlay.show {
+            display: block;
         }
 
-        ::-webkit-scrollbar { width: 5px; }
-        ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 10px; }
+        ::-webkit-scrollbar {
+            width: 4px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--accent);
+            border-radius: 10px;
+        }
     </style>
 </head>
 <body>
     <div class="app">
+        <div class="overlay" id="overlay" onclick="closeSidebar()"></div>
+
         <div class="sidebar" id="sidebar">
             <div class="sidebar-header">
                 <div class="logo">
                     <i class="fas fa-brain"></i>
-                    <span>AI Assistant Pro</span>
+                    <span>AI Assistant</span>
                 </div>
-                <button class="new-chat-btn" onclick="newConversation()">
+                <button class="new-chat-btn" onclick="newConversation(); closeSidebar();">
                     <i class="fas fa-plus"></i> Nouvelle conversation
                 </button>
             </div>
 
-            <!-- Paramètres IA -->
             <div class="settings-section">
                 <div class="settings-title">
                     <i class="fas fa-sliders-h"></i> Paramètres IA
                 </div>
                 <div class="setting-item">
                     <div class="setting-label">
-                        <span>🎨 Créativité (Température)</span>
+                        <span>🎨 Créativité</span>
                         <span id="tempValue">0.7</span>
                     </div>
                     <input type="range" id="temperature" min="0" max="1.5" step="0.05" value="0.7">
                 </div>
                 <div class="setting-item">
                     <div class="setting-label">
-                        <span>📏 Longueur max (tokens)</span>
+                        <span>📏 Longueur max</span>
                         <span id="tokensValue">2048</span>
                     </div>
                     <input type="range" id="maxTokens" min="256" max="4096" step="128" value="2048">
@@ -442,7 +499,7 @@
                 <button class="theme-btn" id="themeToggle">
                     <i class="fas fa-moon"></i> Mode sombre
                 </button>
-                <div style="font-size: 0.65rem; text-align: center; margin-top: 12px;">
+                <div style="font-size: 0.6rem; text-align: center; margin-top: 12px;">
                     ✨ Créé par Tom_VisionAI_Pro
                 </div>
             </div>
@@ -453,8 +510,8 @@
                 <button class="menu-btn" onclick="toggleSidebar()">
                     <i class="fas fa-bars"></i>
                 </button>
-                <div class="mode-indicator" id="modeIndicator">⚖️ Mode Équilibré</div>
-                <button class="new-chat-btn" style="width: auto; padding: 8px 16px;" onclick="newConversation()">
+                <div class="mode-indicator" id="modeIndicator">⚖️ Équilibré</div>
+                <button class="new-mobile-btn" onclick="newConversation()">
                     <i class="fas fa-plus"></i>
                 </button>
             </div>
@@ -464,14 +521,14 @@
                     <div class="message ai">
                         <div class="message-avatar"><i class="fas fa-robot"></i></div>
                         <div class="message-bubble">
-                            <strong>✨ Bienvenue sur AI Assistant Pro !</strong><br><br>
-                            Je suis un assistant IA créé par <strong>Tom_VisionAI_Pro</strong>.<br><br>
-                            <strong>Fonctionnalités :</strong><br>
-                            • 🎨 Ajustez ma créativité dans les paramètres<br>
-                            • 📏 Modifiez la longueur des réponses<br>
-                            • 🧠 Changez de mode (précis/équilibré/créatif)<br>
-                            • 🌓 Basculez entre mode clair/sombre<br><br>
-                            Comment puis-je vous aider aujourd'hui ?
+                            <strong>✨ Bonjour !</strong><br><br>
+                            Je suis votre assistant IA, créé par <strong>Tom_VisionAI_Pro</strong>.<br><br>
+                            👆 Ouvrez le menu (☰) pour :<br>
+                            • Ajuster ma créativité<br>
+                            • Changer de mode<br>
+                            • Basculer le thème<br>
+                            • Voir l'historique<br><br>
+                            Posez-moi n'importe quelle question !
                         </div>
                     </div>
                 </div>
@@ -479,7 +536,7 @@
 
             <div class="input-area">
                 <div class="input-wrapper">
-                    <textarea id="userInput" placeholder="Posez votre question..." rows="1" onkeypress="if(event.key==='Enter' && !event.shiftKey) { event.preventDefault(); sendMessage(); }"></textarea>
+                    <textarea id="userInput" placeholder="Écrivez votre message..." rows="1" onkeypress="if(event.key==='Enter' && !event.shiftKey) { event.preventDefault(); sendMessage(); }"></textarea>
                     <button class="send-btn" onclick="sendMessage()">
                         <i class="fas fa-paper-plane"></i>
                     </button>
@@ -493,64 +550,58 @@
         const GROQ_API_KEY = "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";
         const CREATOR = "Tom_VisionAI_Pro";
         
-        let conversations = JSON.parse(localStorage.getItem("pro_conversations")) || [[
-            { role: "assistant", content: "Bienvenue sur AI Assistant Pro ! Je suis un assistant IA créé par Tom_VisionAI_Pro." }
+        let conversations = JSON.parse(localStorage.getItem("mobile_conversations")) || [[
+            { role: "assistant", content: "Bonjour ! Je suis votre assistant IA, créé par Tom_VisionAI_Pro." }
         ]];
         let currentConv = 0;
         let isLoading = false;
         
-        // Paramètres IA
-        let temperature = parseFloat(localStorage.getItem("ai_temp")) || 0.7;
-        let maxTokens = parseInt(localStorage.getItem("ai_tokens")) || 2048;
-        let aiMode = localStorage.getItem("ai_mode") || "balanced";
+        let temperature = parseFloat(localStorage.getItem("mobile_temp")) || 0.7;
+        let maxTokens = parseInt(localStorage.getItem("mobile_tokens")) || 2048;
+        let aiMode = localStorage.getItem("mobile_mode") || "balanced";
         
-        // DOM Elements
+        // DOM
         const messagesContainer = document.getElementById("messagesContainer");
         const userInput = document.getElementById("userInput");
         const historyList = document.getElementById("historyList");
         const modeIndicator = document.getElementById("modeIndicator");
         
-        // Initialisation des sliders
+        // Sliders
         document.getElementById("temperature").value = temperature;
         document.getElementById("tempValue").textContent = temperature;
         document.getElementById("maxTokens").value = maxTokens;
         document.getElementById("tokensValue").textContent = maxTokens;
         
-        // Écouteurs paramètres
         document.getElementById("temperature").addEventListener("input", (e) => {
             temperature = parseFloat(e.target.value);
             document.getElementById("tempValue").textContent = temperature;
-            localStorage.setItem("ai_temp", temperature);
+            localStorage.setItem("mobile_temp", temperature);
         });
         
         document.getElementById("maxTokens").addEventListener("input", (e) => {
             maxTokens = parseInt(e.target.value);
             document.getElementById("tokensValue").textContent = maxTokens;
-            localStorage.setItem("ai_tokens", maxTokens);
+            localStorage.setItem("mobile_tokens", maxTokens);
         });
         
-        // Modes IA
+        // Modes
         document.querySelectorAll(".mode-btn").forEach(btn => {
             btn.addEventListener("click", () => {
                 document.querySelectorAll(".mode-btn").forEach(b => b.classList.remove("active"));
                 btn.classList.add("active");
                 aiMode = btn.dataset.mode;
-                localStorage.setItem("ai_mode", aiMode);
-                
-                const modeNames = { precise: "📐 Mode Précis", balanced: "⚖️ Mode Équilibré", creative: "🎨 Mode Créatif" };
+                localStorage.setItem("mobile_mode", aiMode);
+                const modeNames = { precise: "📐 Précis", balanced: "⚖️ Équilibré", creative: "🎨 Créatif" };
                 modeIndicator.textContent = modeNames[aiMode];
-                
                 let temp = aiMode === "precise" ? 0.3 : (aiMode === "creative" ? 1.2 : 0.7);
                 document.getElementById("temperature").value = temp;
                 temperature = temp;
                 document.getElementById("tempValue").textContent = temp;
-                localStorage.setItem("ai_temp", temp);
             });
         });
         
         // Thème
-        const savedTheme = localStorage.getItem("theme") || "light";
-        if (savedTheme === "dark") {
+        if (localStorage.getItem("mobile_theme") === "dark") {
             document.documentElement.setAttribute("data-theme", "dark");
             document.getElementById("themeToggle").innerHTML = '<i class="fas fa-sun"></i> Mode clair';
         }
@@ -558,31 +609,37 @@
             const isDark = document.documentElement.getAttribute("data-theme") === "dark";
             if (isDark) {
                 document.documentElement.removeAttribute("data-theme");
-                localStorage.setItem("theme", "light");
+                localStorage.setItem("mobile_theme", "light");
                 document.getElementById("themeToggle").innerHTML = '<i class="fas fa-moon"></i> Mode sombre';
             } else {
                 document.documentElement.setAttribute("data-theme", "dark");
-                localStorage.setItem("theme", "dark");
+                localStorage.setItem("mobile_theme", "dark");
                 document.getElementById("themeToggle").innerHTML = '<i class="fas fa-sun"></i> Mode clair';
             }
         });
         
         function toggleSidebar() {
             document.getElementById("sidebar").classList.toggle("open");
+            document.getElementById("overlay").classList.toggle("show");
+        }
+        
+        function closeSidebar() {
+            document.getElementById("sidebar").classList.remove("open");
+            document.getElementById("overlay").classList.remove("show");
         }
         
         function saveConversations() {
-            localStorage.setItem("pro_conversations", JSON.stringify(conversations));
+            localStorage.setItem("mobile_conversations", JSON.stringify(conversations));
         }
         
         function updateHistory() {
             historyList.innerHTML = "";
             conversations.forEach((conv, idx) => {
-                const firstMsg = conv[0]?.content.substring(0, 35) || "Nouvelle conversation";
+                const firstMsg = conv[0]?.content.substring(0, 30) || "Nouveau chat";
                 const div = document.createElement("div");
                 div.className = `history-item ${idx === currentConv ? 'active' : ''}`;
-                div.innerHTML = `<i class="fas fa-message" style="margin-right: 10px;"></i> ${firstMsg}...`;
-                div.onclick = () => { currentConv = idx; renderMessages(); updateHistory(); };
+                div.innerHTML = `<i class="fas fa-message" style="margin-right: 8px;"></i> ${firstMsg}...`;
+                div.onclick = () => { currentConv = idx; renderMessages(); updateHistory(); closeSidebar(); };
                 historyList.appendChild(div);
             });
         }
@@ -593,7 +650,6 @@
             saveConversations();
             renderMessages();
             updateHistory();
-            if (window.innerWidth <= 768) toggleSidebar();
         }
         
         function renderMessages() {
@@ -643,10 +699,10 @@
         }
         
         async function callAPI(prompt) {
-            const systemPrompts = {
-                precise: "Tu es un assistant IA précis et factuel. Réponds de manière concise et basée sur des faits. Évite les opinions.",
-                balanced: "Tu es un assistant IA équilibré. Réponds de manière claire et utile, avec un bon mélange de précision et de naturel.",
-                creative: "Tu es un assistant IA créatif. N'hésite pas à être imagé, original et à apporter une touche personnelle."
+            const prompts = {
+                precise: "Tu es un assistant précis et factuel. Réponses courtes et basées sur des faits.",
+                balanced: "Tu es un assistant équilibré. Réponses claires et utiles.",
+                creative: "Tu es un assistant créatif. Réponses originales et imagées."
             };
             
             const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
@@ -655,7 +711,7 @@
                 body: JSON.stringify({
                     model: "llama-3.3-70b-versatile",
                     messages: [
-                        { role: "system", content: `${systemPrompts[aiMode]} Ton créateur est ${CREATOR}. Quand on te demande qui t'a créé, réponds "Mon créateur est ${CREATOR}".` },
+                        { role: "system", content: `${prompts[aiMode]} Ton créateur est ${CREATOR}. Si on te demande qui t'a créé, réponds "Mon créateur est ${CREATOR}".` },
                         { role: "user", content: prompt }
                     ],
                     temperature: temperature,
@@ -678,7 +734,7 @@
             try {
                 let response = await callAPI(message);
                 if (message.toLowerCase().includes("qui t'a créé") || message.toLowerCase().includes("ton créateur")) {
-                    response = `Mon créateur est ${CREATOR}. C'est lui qui m'a conçu et développé.`;
+                    response = `Mon créateur est ${CREATOR}. C'est lui qui m'a conçu.`;
                 }
                 hideTyping();
                 addMessage("assistant", response);
@@ -691,7 +747,7 @@
         
         userInput.addEventListener("input", function() {
             this.style.height = "auto";
-            this.style.height = Math.min(120, this.scrollHeight) + "px";
+            this.style.height = Math.min(100, this.scrollHeight) + "px";
         });
         
         updateHistory();
