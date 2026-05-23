@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>AI Voice Illimité - Assistant Vocal IA Gratuit</title>
+    <title>ChatGPT Pro - Assistant IA Ultime</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
@@ -14,717 +14,805 @@
         }
 
         :root {
-            --primary: #8b5cf6;
-            --primary-dark: #7c3aed;
-            --secondary: #ec4899;
-            --success: #10b981;
+            --bg-primary: #ffffff;
+            --bg-secondary: #f7f7f8;
+            --bg-sidebar: #f9f9f9;
+            --text-primary: #171717;
+            --text-secondary: #6e6e6e;
+            --border: #e5e5e5;
+            --user-msg: #f7f7f8;
+            --ai-msg: #ffffff;
+            --sidebar-hover: #e5e5e5;
+            --accent: #10a37f;
+            --accent-hover: #1a7f64;
+            --danger: #ef4444;
             --warning: #f59e0b;
-            --dark: #0f0f1a;
-            --darker: #05050a;
-            --light: #ffffff;
-            --gray: #8a8a8a;
-            --glass: rgba(255, 255, 255, 0.05);
-            --glass-border: rgba(255, 255, 255, 0.1);
+        }
+
+        [data-theme="dark"] {
+            --bg-primary: #343541;
+            --bg-secondary: #444654;
+            --bg-sidebar: #202123;
+            --text-primary: #ececec;
+            --text-secondary: #acacbe;
+            --border: #4e4f60;
+            --user-msg: #343541;
+            --ai-msg: #444654;
+            --sidebar-hover: #2a2b32;
         }
 
         body {
-            font-family: 'Inter', system-ui, sans-serif;
-            background: linear-gradient(135deg, var(--darker) 0%, var(--dark) 100%);
-            color: var(--light);
-            min-height: 100vh;
+            font-family: 'Inter', -apple-system, system-ui, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            height: 100vh;
+            overflow: hidden;
         }
 
-        .navbar {
-            background: rgba(0, 0, 0, 0.95);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid var(--glass-border);
-            padding: 16px 32px;
+        .app {
+            display: flex;
+            height: 100vh;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 280px;
+            background: var(--bg-sidebar);
+            border-right: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            transition: all 0.3s;
+            z-index: 10;
+        }
+
+        .sidebar-header {
+            padding: 16px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .new-chat-btn {
+            width: 100%;
+            background: transparent;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 12px;
+            color: var(--text-primary);
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: all 0.2s;
+        }
+
+        .new-chat-btn:hover {
+            background: var(--sidebar-hover);
+        }
+
+        .tools-section {
+            padding: 12px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .tools-title {
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+        }
+
+        .tool-btn {
+            background: transparent;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 8px;
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .tool-btn:hover {
+            background: var(--sidebar-hover);
+            color: var(--text-primary);
+        }
+
+        .conversations-list {
+            flex: 1;
+            overflow-y: auto;
+            padding: 12px;
+        }
+
+        .conv-item {
+            padding: 10px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 4px;
+        }
+
+        .conv-item:hover, .conv-item.active {
+            background: var(--sidebar-hover);
+            color: var(--text-primary);
+        }
+
+        .sidebar-footer {
+            padding: 16px;
+            border-top: 1px solid var(--border);
+        }
+
+        .theme-toggle {
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            width: 100%;
+            padding: 8px;
+            border-radius: 8px;
+        }
+
+        .theme-toggle:hover {
+            background: var(--sidebar-hover);
+        }
+
+        /* Main */
+        .main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .header {
+            padding: 12px 24px;
+            border-bottom: 1px solid var(--border);
             display: flex;
             justify-content: space-between;
             align-items: center;
-            flex-wrap: wrap;
+            background: var(--bg-primary);
+        }
+
+        .time-info {
+            display: flex;
             gap: 20px;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
         }
 
-        .logo {
+        .weather-info {
             display: flex;
             align-items: center;
-            gap: 12px;
-        }
-
-        .logo-icon {
-            width: 45px;
-            height: 45px;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            border-radius: 14px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-        }
-
-        .logo h1 {
-            font-size: 1.5rem;
-            font-weight: 700;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-        }
-
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 32px;
-        }
-
-        .hero {
-            text-align: center;
-            padding: 40px 20px;
-            background: linear-gradient(135deg, rgba(139,92,246,0.1), rgba(236,72,153,0.05));
-            border-radius: 32px;
-            margin-bottom: 32px;
-            border: 1px solid var(--glass-border);
-        }
-
-        .hero h1 { font-size: 2rem; margin-bottom: 16px; }
-        .hero .highlight { background: linear-gradient(135deg, var(--primary), var(--secondary)); -webkit-background-clip: text; background-clip: text; color: transparent; }
-        .hero .unlimited-badge { background: linear-gradient(135deg, var(--success), var(--primary)); display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 0.7rem; margin-top: 10px; }
-
-        /* Configuration */
-        .config-section {
-            background: var(--glass);
-            backdrop-filter: blur(10px);
-            border-radius: 24px;
-            border: 1px solid var(--glass-border);
-            padding: 24px;
-            margin-bottom: 24px;
-        }
-
-        .config-title {
-            font-size: 1rem;
-            margin-bottom: 16px;
-            color: var(--primary);
-        }
-
-        .api-selector {
-            display: flex;
-            gap: 12px;
-            margin-bottom: 20px;
-            flex-wrap: wrap;
-        }
-
-        .api-option {
-            flex: 1;
-            background: rgba(0,0,0,0.5);
-            border: 1px solid var(--glass-border);
-            border-radius: 60px;
-            padding: 12px 20px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .api-option.active {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            border-color: transparent;
-        }
-
-        .api-option:hover:not(.active) {
-            border-color: var(--primary);
-        }
-
-        .api-input-group {
-            display: flex;
-            gap: 12px;
-            flex-wrap: wrap;
-            margin-bottom: 12px;
-        }
-
-        .api-input-group input {
-            flex: 2;
-            background: rgba(0,0,0,0.5);
-            border: 1px solid var(--glass-border);
-            border-radius: 60px;
-            padding: 12px 20px;
-            color: white;
-            outline: none;
-        }
-
-        .btn-small {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            border: none;
-            border-radius: 60px;
-            padding: 12px 24px;
-            color: white;
-            font-weight: 600;
-            cursor: pointer;
-        }
-
-        .status-badge {
-            font-size: 0.75rem;
-            margin-top: 8px;
-        }
-        .status-success { color: var(--success); }
-        .status-warning { color: var(--warning); }
-        .status-error { color: #ef4444; }
-
-        /* Interface vocale */
-        .voice-interface {
-            background: var(--glass);
-            backdrop-filter: blur(10px);
-            border-radius: 32px;
-            border: 1px solid var(--glass-border);
-            padding: 32px;
-            text-align: center;
-            margin-bottom: 24px;
-        }
-
-        .avatar {
-            width: 120px;
-            height: 120px;
-            margin: 0 auto 24px;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 48px;
-            animation: pulse 2s ease-in-out infinite;
-            box-shadow: 0 0 30px rgba(139,92,246,0.3);
-        }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); box-shadow: 0 0 20px rgba(139,92,246,0.3); }
-            50% { transform: scale(1.02); box-shadow: 0 0 40px rgba(139,92,246,0.6); }
-        }
-
-        .voice-controls {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            margin-bottom: 24px;
-            flex-wrap: wrap;
-        }
-
-        .voice-btn {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            border: none;
-            border-radius: 60px;
-            padding: 16px 32px;
-            color: white;
-            font-weight: 700;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: all 0.3s;
-            display: inline-flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .voice-btn.recording {
-            animation: recording 1s infinite;
-            background: linear-gradient(135deg, #ef4444, #dc2626);
-        }
-
-        @keyframes recording {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.7; }
+            gap: 8px;
         }
 
         .chat-area {
-            background: var(--glass);
-            backdrop-filter: blur(10px);
-            border-radius: 24px;
-            border: 1px solid var(--glass-border);
-            height: 300px;
+            flex: 1;
             overflow-y: auto;
-            padding: 20px;
-            margin-bottom: 16px;
+        }
+
+        .messages-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px 24px;
         }
 
         .message {
             display: flex;
-            gap: 12px;
-            margin-bottom: 16px;
+            gap: 20px;
+            padding: 20px 0;
             animation: fadeIn 0.3s ease;
         }
+
+        .message.user { background: var(--user-msg); border-radius: 0; }
+        .message.ai { background: var(--ai-msg); }
 
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        .message.user { justify-content: flex-end; }
         .message-avatar {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            border-radius: 4px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 14px;
+            font-size: 18px;
+            flex-shrink: 0;
         }
-        .message.user .message-avatar { background: var(--secondary); order: 2; }
-        .message.ai .message-avatar { background: var(--primary); }
-        .message-bubble {
-            max-width: 70%;
-            padding: 10px 16px;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            line-height: 1.5;
-        }
-        .message.user .message-bubble { background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white; border-bottom-right-radius: 5px; }
-        .message.ai .message-bubble { background: rgba(255,255,255,0.08); border: 1px solid var(--glass-border); border-bottom-left-radius: 5px; }
 
-        .input-group {
-            display: flex;
-            gap: 12px;
-        }
-        .input-group input {
-            flex: 1;
-            background: rgba(0,0,0,0.5);
-            border: 1px solid var(--glass-border);
-            border-radius: 60px;
-            padding: 14px 20px;
+        .message.user .message-avatar {
+            background: var(--accent);
             color: white;
+        }
+
+        .message-content {
+            flex: 1;
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+
+        .message-content pre {
+            background: var(--bg-secondary);
+            padding: 12px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 12px 0;
+        }
+
+        .input-area {
+            padding: 16px 24px 32px;
+            background: var(--bg-primary);
+            border-top: 1px solid var(--border);
+        }
+
+        .input-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .input-wrapper {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            display: flex;
+            align-items: flex-end;
+            gap: 8px;
+            padding: 8px 12px;
+        }
+
+        .input-wrapper:focus-within {
+            border-color: var(--accent);
+        }
+
+        textarea {
+            flex: 1;
+            background: transparent;
+            border: none;
+            color: var(--text-primary);
+            font-family: inherit;
+            font-size: 0.95rem;
+            resize: none;
             outline: none;
+            padding: 8px 4px;
+            max-height: 150px;
         }
 
-        .loading-dots {
-            display: inline-flex;
-            gap: 4px;
-        }
-        .loading-dots span {
-            width: 6px;
-            height: 6px;
-            background: white;
+        .send-btn {
+            background: var(--accent);
+            border: none;
+            width: 32px;
+            height: 32px;
             border-radius: 50%;
-            animation: dot 1.4s infinite;
+            cursor: pointer;
+            color: white;
         }
-        @keyframes dot { 0%, 60%, 100% { opacity: 0.3; } 30% { opacity: 1; } }
 
-        .token-counter {
-            text-align: center;
-            font-size: 0.7rem;
-            color: var(--gray);
-            margin-top: 16px;
+        .typing {
+            display: flex;
+            gap: 4px;
+            padding: 12px 0;
+        }
+
+        .typing span {
+            width: 8px;
+            height: 8px;
+            background: var(--text-secondary);
+            border-radius: 50%;
+            animation: typingAnim 1.4s infinite;
+        }
+
+        @keyframes typingAnim {
+            0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
+            30% { transform: translateY(-8px); opacity: 1; }
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: var(--bg-primary);
+            border-radius: 16px;
+            width: 90%;
+            max-width: 500px;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            padding: 16px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .modal-body {
+            padding: 20px;
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--text-secondary);
+        }
+
+        .menu-btn {
+            display: none;
+            background: transparent;
+            border: none;
+            color: var(--text-primary);
+            font-size: 1.2rem;
+            cursor: pointer;
         }
 
         @media (max-width: 768px) {
-            .container { padding: 16px; }
-            .voice-btn { padding: 12px 24px; font-size: 0.9rem; }
+            .sidebar {
+                position: fixed;
+                left: -280px;
+                height: 100%;
+                transition: left 0.3s;
+            }
+            .sidebar.open { left: 0; }
+            .menu-btn { display: block; }
+            .time-info { display: none; }
         }
     </style>
 </head>
 <body>
-    <nav class="navbar">
-        <div class="logo">
-            <div class="logo-icon"><i class="fas fa-microphone-alt"></i></div>
-            <div>
-                <h1>AI Voice Illimité</h1>
-                <p>Assistant vocal IA - 100% Gratuit & Illimité</p>
-            </div>
-        </div>
-        <div class="badge">
-            <span style="background: rgba(139,92,246,0.2); padding: 6px 12px; border-radius: 20px; font-size: 0.7rem;">✨ Créé par Tom_VisionAI_Pro</span>
-        </div>
-    </nav>
-
-    <div class="container">
-        <div class="hero">
-            <h1>🎤 <span class="highlight">IA Illimité et Gratuite</span></h1>
-            <p>Parlez à l'IA sans limite - Groq offre 30 requêtes/minute (illimité dans le temps)</p>
-            <div class="unlimited-badge">🚀 API ILLIMITÉE & GRATUITE</div>
-        </div>
-
-        <!-- Configuration API -->
-        <div class="config-section">
-            <div class="config-title"><i class="fas fa-cloud"></i> Choisissez votre API IA (toutes gratuites)</div>
-            <div class="api-selector">
-                <div class="api-option active" data-api="groq" onclick="selectAPI('groq')">🚀 Groq (Ultra rapide - 30 req/min)</div>
-                <div class="api-option" data-api="ollama" onclick="selectAPI('ollama')">💻 Ollama (Local - Illimité hors ligne)</div>
-                <div class="api-option" data-api="openrouter" onclick="selectAPI('openrouter')">🌐 OpenRouter (Multi-modèles gratuits)</div>
-            </div>
-            <div id="groqConfig">
-                <div class="api-input-group">
-                    <input type="text" id="groqApiKey" placeholder="Clé API Groq (gratuite sur console.groq.com)" value="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">
-                    <button class="btn-small" onclick="saveGroqKey()">💾 Enregistrer</button>
-                </div>
-                <div id="groqStatus" class="status-badge status-success">✅ Clé Groq configurée - Illimité !</div>
-            </div>
-            <div id="ollamaConfig" style="display: none;">
-                <div class="api-input-group">
-                    <input type="text" id="ollamaUrl" placeholder="URL Ollama (par défaut: http://localhost:11434)" value="http://localhost:11434">
-                    <button class="btn-small" onclick="saveOllamaUrl()">💾 Enregistrer</button>
-                </div>
-                <div id="ollamaStatus" class="status-badge status-warning">⚠️ Nécessite Ollama installé localement</div>
-                <p style="font-size: 0.7rem; margin-top: 8px;"><i class="fas fa-info-circle"></i> Ollama est totalement gratuit, illimité et fonctionne hors ligne. <a href="https://ollama.ai" target="_blank" style="color: var(--primary);">Télécharger Ollama</a></p>
-            </div>
-            <div id="openrouterConfig" style="display: none;">
-                <div class="api-input-group">
-                    <input type="text" id="openrouterKey" placeholder="Clé API OpenRouter (gratuite sur openrouter.ai)">
-                    <button class="btn-small" onclick="saveOpenRouterKey()">💾 Enregistrer</button>
-                </div>
-                <div id="openrouterStatus" class="status-badge status-warning">⚠️ Modèles gratuits disponibles (ex: NousResearch/Hermes)</div>
-            </div>
-        </div>
-
-        <!-- Interface vocale -->
-        <div class="voice-interface">
-            <div class="avatar" id="avatar">
-                <i class="fas fa-robot"></i>
-            </div>
-            <div class="voice-controls">
-                <button class="voice-btn" id="micBtn" onclick="startVoiceRecognition()">
-                    <i class="fas fa-microphone"></i> Parler à l'IA
-                </button>
-                <button class="voice-btn" onclick="speakLastResponse()" id="speakBtn" style="opacity:0.5;" disabled>
-                    <i class="fas fa-volume-up"></i> Répéter
+    <div class="app">
+        <div class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <button class="new-chat-btn" onclick="newConversation()">
+                    <i class="fas fa-plus"></i> Nouvelle conversation
                 </button>
             </div>
-            <div id="listeningStatus" style="color: var(--primary); margin-bottom: 16px; font-size: 0.85rem;"></div>
-        </div>
-
-        <!-- Chat -->
-        <div class="chat-area" id="chatArea">
-            <div class="message ai">
-                <div class="message-avatar">🤖</div>
-                <div class="message-bubble">
-                    Bonjour ! Je suis votre assistant vocal IA <strong>ILLIMITÉ et GRATUIT</strong>, créé par <strong>Tom_VisionAI_Pro</strong>.<br><br>
-                    ✅ <strong>30 requêtes/minute</strong> (Groq)<br>
-                    ✅ <strong>100% gratuit</strong> - Pas de limite de temps<br>
-                    ✅ <strong>Voix naturelle</strong> via ElevenLabs ou navigateur<br><br>
-                    Cliquez sur le micro et parlez-moi !
+            <div class="tools-section">
+                <div class="tools-title">🛠️ OUTILS INTÉGRÉS</div>
+                <div class="tools-grid">
+                    <button class="tool-btn" onclick="openTool('codegen')"><i class="fas fa-code"></i> Code</button>
+                    <button class="tool-btn" onclick="openTool('analyzer')"><i class="fas fa-bug"></i> Analyse</button>
+                    <button class="tool-btn" onclick="openTool('translate')"><i class="fas fa-language"></i> Traduction</button>
+                    <button class="tool-btn" onclick="openTool('timer')"><i class="fas fa-clock"></i> Minuteur</button>
+                    <button class="tool-btn" onclick="openTool('calculator')"><i class="fas fa-calculator"></i> Calculatrice</button>
+                    <button class="tool-btn" onclick="openTool('password')"><i class="fas fa-key"></i> Mot de passe</button>
+                </div>
+            </div>
+            <div class="conversations-list" id="convList"></div>
+            <div class="sidebar-footer">
+                <button class="theme-toggle" id="themeToggle">
+                    <i class="fas fa-moon"></i> Mode sombre
+                </button>
+                <div style="margin-top: 12px; font-size: 0.7rem; text-align: center;">
+                    ✨ Créé par Tom_VisionAI_Pro
                 </div>
             </div>
         </div>
 
-        <div class="input-group">
-            <input type="text" id="textInput" placeholder="Ou tapez votre message ici..." onkeypress="if(event.key==='Enter') sendTextMessage()">
-            <button class="btn-small" onclick="sendTextMessage()">Envoyer</button>
+        <div class="main">
+            <div class="header">
+                <button class="menu-btn" id="menuBtn" onclick="toggleSidebar()">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div class="time-info">
+                    <div id="currentTime"><i class="far fa-clock"></i> --:--:--</div>
+                    <div id="currentDate"><i class="far fa-calendar"></i> --/--/----</div>
+                    <div class="weather-info" id="weatherInfo">
+                        <i class="fas fa-cloud-sun"></i> <span id="weatherTemp">--°C</span>
+                    </div>
+                </div>
+                <button class="header-btn" onclick="newConversation()">
+                    <i class="fas fa-plus"></i>
+                </button>
+            </div>
+
+            <div class="chat-area">
+                <div class="messages-container" id="messagesContainer">
+                    <div class="message ai">
+                        <div class="message-avatar"><i class="fas fa-robot"></i></div>
+                        <div class="message-content">
+                            <strong>✨ Bienvenue sur ChatGPT Pro !</strong><br><br>
+                            Je suis un assistant IA créé par <strong>Tom_VisionAI_Pro</strong>.<br><br>
+                            <strong>Fonctionnalités :</strong><br>
+                            • 🕐 Heure locale en temps réel<br>
+                            • 🌤️ Météo simulée<br>
+                            • 💻 Générateur de code<br>
+                            • 🔍 Analyseur de code<br>
+                            • 🌍 Traduction multi-langues<br>
+                            • ⏲️ Minuteur Pomodoro<br>
+                            • 🧮 Calculatrice<br>
+                            • 🔐 Générateur de mots de passe<br><br>
+                            Comment puis-je vous aider aujourd'hui ?
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="input-area">
+                <div class="input-container">
+                    <div class="input-wrapper">
+                        <textarea id="userInput" placeholder="Posez votre question..." rows="1" onkeypress="if(event.key==='Enter' && !event.shiftKey) { event.preventDefault(); sendMessage(); }"></textarea>
+                        <button class="send-btn" onclick="sendMessage()"><i class="fas fa-paper-plane"></i></button>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="token-counter" id="tokenCounter">
-            🚀 API Groq - Illimité et gratuit (30 req/minute)
+    </div>
+
+    <!-- Modal outils -->
+    <div id="toolModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalTitle">Outil</h3>
+                <button class="close-modal" onclick="closeModal()">×</button>
+            </div>
+            <div class="modal-body" id="modalBody"></div>
         </div>
     </div>
 
     <script>
         // ========== CONFIGURATION ==========
-        const CREATOR_NAME = "Tom_VisionAI_Pro";
+        const GROQ_API_KEY = "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";
+        const CREATOR = "Tom_VisionAI_Pro";
         
-        // API selection
-        let currentAPI = "groq";
+        let conversations = JSON.parse(localStorage.getItem("chatgpt_pro_conversations")) || [[
+            { role: "assistant", content: "Bienvenue sur ChatGPT Pro ! Je suis un assistant IA créé par Tom_VisionAI_Pro. Comment puis-je vous aider ?" }
+        ]];
+        let currentConv = 0;
+        let isLoading = false;
         
-        // Groq (déjà configuré - illimité)
-        let GROQ_API_KEY = localStorage.getItem("groq_api_key") || "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";
+        // DOM Elements
+        const messagesContainer = document.getElementById("messagesContainer");
+        const userInput = document.getElementById("userInput");
+        const convList = document.getElementById("convList");
         
-        // Ollama (local - illimité)
-        let OLLAMA_URL = localStorage.getItem("ollama_url") || "http://localhost:11434";
-        
-        // OpenRouter
-        let OPENROUTER_KEY = localStorage.getItem("openrouter_key") || "";
-        
-        // ElevenLabs pour la voix
-        let ELEVEN_API_KEY = localStorage.getItem("eleven_api_key") || "";
-        
-        let lastResponse = "";
-        let requestCount = 0;
-        
-        // Sauvegarde des clés
-        function saveGroqKey() {
-            const key = document.getElementById("groqApiKey").value.trim();
-            if (key) {
-                GROQ_API_KEY = key;
-                localStorage.setItem("groq_api_key", key);
-                document.getElementById("groqStatus").innerHTML = '✅ Clé Groq enregistrée - Illimité !';
-                document.getElementById("groqStatus").className = "status-badge status-success";
-            }
+        // ========== HEURE LOCALE EN TEMPS RÉEL ==========
+        function updateTime() {
+            const now = new Date();
+            const timeStr = now.toLocaleTimeString('fr-FR');
+            const dateStr = now.toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+            document.getElementById("currentTime").innerHTML = `<i class="far fa-clock"></i> ${timeStr}`;
+            document.getElementById("currentDate").innerHTML = `<i class="far fa-calendar"></i> ${dateStr}`;
         }
+        updateTime();
+        setInterval(updateTime, 1000);
         
-        function saveOllamaUrl() {
-            const url = document.getElementById("ollamaUrl").value.trim();
-            if (url) {
-                OLLAMA_URL = url;
-                localStorage.setItem("ollama_url", url);
-                document.getElementById("ollamaStatus").innerHTML = '✅ URL Ollama enregistrée';
-                document.getElementById("ollamaStatus").className = "status-badge status-success";
-            }
+        // ========== MÉTÉO SIMULÉE ==========
+        function updateWeather() {
+            const weathers = [
+                { icon: "☀️", temp: 24, desc: "Ensoleillé" },
+                { icon: "⛅", temp: 20, desc: "Peu nuageux" },
+                { icon: "🌧️", temp: 16, desc: "Pluie fine" },
+                { icon: "☁️", temp: 18, desc: "Nuageux" },
+                { icon: "🌤️", temp: 22, desc: "Légèrement nuageux" }
+            ];
+            const weather = weathers[Math.floor(Math.random() * weathers.length)];
+            document.getElementById("weatherTemp").innerHTML = `${weather.icon} ${weather.temp}°C`;
         }
+        updateWeather();
+        setInterval(updateWeather, 3600000); // toutes les heures
         
-        function saveOpenRouterKey() {
-            const key = document.getElementById("openrouterKey").value.trim();
-            if (key) {
-                OPENROUTER_KEY = key;
-                localStorage.setItem("openrouter_key", key);
-                document.getElementById("openrouterStatus").innerHTML = '✅ Clé OpenRouter enregistrée';
-                document.getElementById("openrouterStatus").className = "status-badge status-success";
-            }
+        // ========== THEME ==========
+        const savedTheme = localStorage.getItem("chatgpt_theme") || "light";
+        if (savedTheme === "dark") {
+            document.documentElement.setAttribute("data-theme", "dark");
+            document.getElementById("themeToggle").innerHTML = '<i class="fas fa-sun"></i> Mode clair';
         }
-        
-        function selectAPI(api) {
-            currentAPI = api;
-            document.querySelectorAll(".api-option").forEach(opt => opt.classList.remove("active"));
-            document.querySelector(`.api-option[data-api="${api}"]`).classList.add("active");
-            
-            document.getElementById("groqConfig").style.display = api === "groq" ? "block" : "none";
-            document.getElementById("ollamaConfig").style.display = api === "ollama" ? "block" : "none";
-            document.getElementById("openrouterConfig").style.display = api === "openrouter" ? "block" : "none";
-            
-            const tokenCounter = document.getElementById("tokenCounter");
-            if (api === "groq") tokenCounter.innerHTML = "🚀 Groq - 30 requêtes/minute (illimité dans le temps)";
-            else if (api === "ollama") tokenCounter.innerHTML = "💻 Ollama - Totalement illimité et hors ligne !";
-            else tokenCounter.innerHTML = "🌐 OpenRouter - Modèles gratuits disponibles";
-        }
-        
-        // ========== APPEL IA ILLIMITÉ ==========
-        async function callAI(prompt) {
-            requestCount++;
-            
-            if (currentAPI === "groq") {
-                return await callGroq(prompt);
-            } else if (currentAPI === "ollama") {
-                return await callOllama(prompt);
+        document.getElementById("themeToggle").addEventListener("click", () => {
+            const isDark = document.documentElement.getAttribute("data-theme") === "dark";
+            if (isDark) {
+                document.documentElement.removeAttribute("data-theme");
+                localStorage.setItem("chatgpt_theme", "light");
+                document.getElementById("themeToggle").innerHTML = '<i class="fas fa-moon"></i> Mode sombre';
             } else {
-                return await callOpenRouter(prompt);
+                document.documentElement.setAttribute("data-theme", "dark");
+                localStorage.setItem("chatgpt_theme", "dark");
+                document.getElementById("themeToggle").innerHTML = '<i class="fas fa-sun"></i> Mode clair';
             }
+        });
+        
+        function toggleSidebar() {
+            document.getElementById("sidebar").classList.toggle("open");
         }
         
-        // Groq - 30 req/minute (illimité dans le temps)
-        async function callGroq(prompt) {
-            const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
-                method: "POST",
-                headers: {
-                    "Authorization": `Bearer ${GROQ_API_KEY}`,
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    model: "llama-3.3-70b-versatile",
-                    messages: [
-                        { role: "system", content: `Tu es un assistant vocal IA. Tu réponds en français de manière naturelle. Ton créateur est ${CREATOR_NAME}. Quand on te demande qui t'a créé, réponds: "Mon créateur est ${CREATOR_NAME}".` },
-                        { role: "user", content: prompt }
-                    ],
-                    temperature: 0.7,
-                    max_tokens: 500
-                })
+        function saveConversations() {
+            localStorage.setItem("chatgpt_pro_conversations", JSON.stringify(conversations));
+        }
+        
+        function updateConvList() {
+            convList.innerHTML = "";
+            conversations.forEach((conv, idx) => {
+                const firstMsg = conv[0]?.content.substring(0, 40) || "Nouvelle conversation";
+                const div = document.createElement("div");
+                div.className = `conv-item ${idx === currentConv ? 'active' : ''}`;
+                div.innerHTML = `<i class="fas fa-message"></i><span style="flex:1; overflow:hidden; text-overflow:ellipsis;">${firstMsg}</span>`;
+                div.onclick = () => { currentConv = idx; renderMessages(); updateConvList(); };
+                convList.appendChild(div);
             });
-            
-            if (!response.ok) throw new Error(`Erreur Groq: ${response.status}`);
-            const data = await response.json();
-            return data.choices[0].message.content;
         }
         
-        // Ollama - Local, totalement illimité et gratuit
-        async function callOllama(prompt) {
-            try {
-                const response = await fetch(`${OLLAMA_URL}/api/generate`, {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({
-                        model: "llama3.2",
-                        prompt: `Tu es un assistant vocal IA. Tu réponds en français. Ton créateur est ${CREATOR_NAME}. Question: ${prompt}`,
-                        stream: false
-                    })
-                });
-                
-                if (!response.ok) throw new Error(`Ollama error: ${response.status}`);
-                const data = await response.json();
-                return data.response;
-            } catch (error) {
-                throw new Error(`Ollama non disponible. Assurez-vous qu'Ollama est installé et lancé. Erreur: ${error.message}`);
-            }
+        function newConversation() {
+            conversations.push([{ role: "assistant", content: "Nouvelle conversation. Comment puis-je vous aider ?" }]);
+            currentConv = conversations.length - 1;
+            saveConversations();
+            renderMessages();
+            updateConvList();
+            if (window.innerWidth <= 768) toggleSidebar();
         }
         
-        // OpenRouter - Modèles gratuits
-        async function callOpenRouter(prompt) {
-            if (!OPENROUTER_KEY) {
-                throw new Error("Veuillez configurer votre clé OpenRouter");
-            }
-            
-            const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
-                method: "POST",
-                headers: {
-                    "Authorization": `Bearer ${OPENROUTER_KEY}`,
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    model: "nousresearch/hermes-2-pro-llama-3-8b:free",
-                    messages: [
-                        { role: "system", content: `Tu es un assistant. Ton créateur est ${CREATOR_NAME}.` },
-                        { role: "user", content: prompt }
-                    ]
-                })
+        function renderMessages() {
+            messagesContainer.innerHTML = "";
+            const conv = conversations[currentConv];
+            conv.forEach(msg => {
+                const div = document.createElement("div");
+                div.className = `message ${msg.role}`;
+                const avatar = msg.role === "user" ? "👤" : "<i class='fas fa-robot'></i>";
+                let content = msg.content;
+                content = content.replace(/```(\w*)\n([\s\S]*?)```/g, '<pre><code>$2</code></pre>');
+                content = content.replace(/\n/g, '<br>');
+                div.innerHTML = `<div class="message-avatar">${avatar}</div><div class="message-content">${content}</div>`;
+                messagesContainer.appendChild(div);
             });
-            
-            if (!response.ok) throw new Error(`OpenRouter error: ${response.status}`);
-            const data = await response.json();
-            return data.choices[0].message.content;
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
         }
         
-        // ========== SYNTHÈSE VOCALE ==========
-        async function speakWithElevenLabs(text) {
-            if (!ELEVEN_API_KEY) {
-                const utterance = new SpeechSynthesisUtterance(text);
-                utterance.lang = "fr-FR";
-                window.speechSynthesis.cancel();
-                window.speechSynthesis.speak(utterance);
-                return;
+        function addMessage(role, content, save = true) {
+            const div = document.createElement("div");
+            div.className = `message ${role}`;
+            const avatar = role === "user" ? "👤" : "<i class='fas fa-robot'></i>";
+            let formatted = content;
+            formatted = formatted.replace(/```(\w*)\n([\s\S]*?)```/g, '<pre><code>$2</code></pre>');
+            formatted = formatted.replace(/\n/g, '<br>');
+            div.innerHTML = `<div class="message-avatar">${avatar}</div><div class="message-content">${formatted}</div>`;
+            messagesContainer.appendChild(div);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            if (save) {
+                conversations[currentConv].push({ role, content });
+                saveConversations();
+                updateConvList();
             }
-            
-            try {
-                const response = await fetch("https://api.elevenlabs.io/v1/text-to-speech/21m00Tcm4TlvDq8ikWAM", {
-                    method: "POST",
-                    headers: {
-                        "Accept": "audio/mpeg",
-                        "Content-Type": "application/json",
-                        "xi-api-key": ELEVEN_API_KEY
-                    },
-                    body: JSON.stringify({
-                        text: text,
-                        model_id: "eleven_monolingual_v1",
-                        voice_settings: { stability: 0.5, similarity_boost: 0.75 }
-                    })
-                });
-                
-                if (!response.ok) throw new Error(`ElevenLabs: ${response.status}`);
-                
-                const audioBlob = await response.blob();
-                const audioUrl = URL.createObjectURL(audioBlob);
-                const audio = new Audio(audioUrl);
-                audio.onended = () => {
-                    URL.revokeObjectURL(audioUrl);
-                    document.getElementById("speakBtn").disabled = false;
-                    document.getElementById("speakBtn").style.opacity = "1";
-                };
-                audio.play();
-                document.getElementById("speakBtn").disabled = true;
-                document.getElementById("speakBtn").style.opacity = "0.5";
-                
-            } catch (error) {
-                const utterance = new SpeechSynthesisUtterance(text);
-                utterance.lang = "fr-FR";
-                window.speechSynthesis.cancel();
-                window.speechSynthesis.speak(utterance);
-            }
-        }
-        
-        async function speakResponse(text) {
-            lastResponse = text;
-            await speakWithElevenLabs(text);
-        }
-        
-        function speakLastResponse() {
-            if (lastResponse) speakWithElevenLabs(lastResponse);
-        }
-        
-        // ========== CHAT ==========
-        function addMessage(role, text) {
-            const chatArea = document.getElementById("chatArea");
-            const messageDiv = document.createElement("div");
-            messageDiv.className = `message ${role}`;
-            const avatar = role === "user" ? "👤" : "🤖";
-            messageDiv.innerHTML = `
-                <div class="message-avatar">${avatar}</div>
-                <div class="message-bubble">${text.replace(/\n/g, '<br>')}</div>
-            `;
-            chatArea.appendChild(messageDiv);
-            chatArea.scrollTop = chatArea.scrollHeight;
         }
         
         function showTyping() {
-            const chatArea = document.getElementById("chatArea");
             const typingDiv = document.createElement("div");
             typingDiv.id = "typingIndicator";
             typingDiv.className = "message ai";
-            typingDiv.innerHTML = `<div class="message-avatar">🤖</div><div class="message-bubble"><div class="loading-dots"><span>●</span><span>●</span><span>●</span></div></div>`;
-            chatArea.appendChild(typingDiv);
-            chatArea.scrollTop = chatArea.scrollHeight;
+            typingDiv.innerHTML = `<div class="message-avatar"><i class='fas fa-robot'></i></div><div class="typing"><span></span><span></span><span></span></div>`;
+            messagesContainer.appendChild(typingDiv);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
         }
         
         function hideTyping() {
-            const indicator = document.getElementById("typingIndicator");
-            if (indicator) indicator.remove();
+            const el = document.getElementById("typingIndicator");
+            if (el) el.remove();
         }
         
-        async function processUserMessage(message) {
-            addMessage("user", message);
-            showTyping();
+        async function callAPI(prompt) {
+            const now = new Date();
+            const timeContext = `Heure actuelle: ${now.toLocaleTimeString('fr-FR')}, Date: ${now.toLocaleDateString('fr-FR')}`;
             
+            const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+                method: "POST",
+                headers: { "Authorization": `Bearer ${GROQ_API_KEY}`, "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    model: "llama-3.3-70b-versatile",
+                    messages: [
+                        { role: "system", content: `Tu es ChatGPT Pro, un assistant IA. Tu réponds en français. Ton créateur est ${CREATOR}. ${timeContext}. Tu as accès à l'heure exacte.` },
+                        { role: "user", content: prompt }
+                    ],
+                    temperature: 0.7,
+                    max_tokens: 2048
+                })
+            });
+            if (!response.ok) throw new Error(`Erreur ${response.status}`);
+            const data = await response.json();
+            return data.choices[0].message.content;
+        }
+        
+        async function sendMessage() {
+            const message = userInput.value.trim();
+            if (!message || isLoading) return;
+            isLoading = true;
+            addMessage("user", message);
+            userInput.value = "";
+            userInput.style.height = "auto";
+            showTyping();
             try {
-                let response = await callAI(message);
-                
+                let response = await callAPI(message);
                 if (message.toLowerCase().includes("qui t'a créé") || message.toLowerCase().includes("ton créateur")) {
-                    response = `Mon créateur est ${CREATOR_NAME}. C'est lui qui m'a conçu pour vous offrir une IA gratuite et illimitée.`;
+                    response = `Mon créateur est ${CREATOR}. C'est lui qui m'a conçu et développé.`;
                 }
-                
                 hideTyping();
-                addMessage("ai", response);
-                await speakResponse(response);
-                
-                document.getElementById("tokenCounter").innerHTML = currentAPI === "groq" ? 
-                    `🚀 Groq - Requête #${requestCount} | 30 requêtes/minute (illimité)` :
-                    (currentAPI === "ollama" ? "💻 Ollama - Local et totalement illimité !" : "🌐 OpenRouter - Modèle gratuit");
-                    
+                addMessage("assistant", response);
             } catch (error) {
                 hideTyping();
-                addMessage("ai", `❌ Erreur: ${error.message}`);
+                addMessage("assistant", `❌ Erreur: ${error.message}`);
             }
+            isLoading = false;
         }
         
-        // ========== RECONNAISSANCE VOCALE ==========
-        let recognition = null;
-        
-        function startVoiceRecognition() {
-            if (!('webkitSpeechRecognition' in window)) {
-                alert("Utilisez Chrome ou Edge pour la reconnaissance vocale");
-                return;
+        // ========== OUTILS ==========
+        function openTool(tool) {
+            const modal = document.getElementById("toolModal");
+            const title = document.getElementById("modalTitle");
+            const body = document.getElementById("modalBody");
+            
+            if (tool === 'codegen') {
+                title.textContent = "💻 Générateur de code";
+                body.innerHTML = `
+                    <textarea id="codePrompt" rows="3" style="width:100%; background:var(--bg-secondary); border:1px solid var(--border); border-radius:8px; padding:12px; color:var(--text-primary);" placeholder="Décrivez le code souhaité..."></textarea>
+                    <select id="codeLang" style="margin-top:12px; width:100%; background:var(--bg-secondary); border:1px solid var(--border); border-radius:8px; padding:10px;">
+                        <option value="html">HTML/CSS</option><option value="javascript">JavaScript</option><option value="python">Python</option>
+                    </select>
+                    <button class="send-btn" style="margin-top:12px; width:100%;" onclick="generateCode()">Générer</button>
+                    <pre id="codeResult" style="margin-top:12px; background:var(--bg-secondary); padding:12px; border-radius:8px; overflow-x:auto;"></pre>
+                `;
+            } else if (tool === 'timer') {
+                title.textContent = "⏲️ Minuteur Pomodoro";
+                body.innerHTML = `
+                    <div style="text-align:center; padding:20px;">
+                        <div id="timerDisplay" style="font-size:3rem; font-family:monospace;">25:00</div>
+                        <div style="margin-top:20px;">
+                            <button class="send-btn" onclick="startTimer(25)">25 min</button>
+                            <button class="send-btn" onclick="startTimer(5)">5 min</button>
+                            <button class="send-btn" onclick="stopTimer()">Stop</button>
+                        </div>
+                    </div>
+                `;
+            } else if (tool === 'calculator') {
+                title.textContent = "🧮 Calculatrice";
+                body.innerHTML = `
+                    <div style="text-align:center;">
+                        <input type="text" id="calcInput" style="width:100%; background:var(--bg-secondary); border:1px solid var(--border); border-radius:8px; padding:12px; margin-bottom:12px;" placeholder="Ex: 25*4, 100/5, 2^3">
+                        <button class="send-btn" style="width:100%;" onclick="calculate()">Calculer</button>
+                        <div id="calcResult" style="margin-top:12px; padding:12px; background:var(--bg-secondary); border-radius:8px;"></div>
+                    </div>
+                `;
+            } else if (tool === 'password') {
+                title.textContent = "🔐 Générateur de mot de passe";
+                body.innerHTML = `
+                    <div style="text-align:center;">
+                        <div style="margin-bottom:12px;">
+                            <label><input type="checkbox" id="useUpper" checked> Majuscules</label>
+                            <label><input type="checkbox" id="useNumbers" checked> Chiffres</label>
+                            <label><input type="checkbox" id="useSymbols" checked> Symboles</label>
+                        </div>
+                        <input type="number" id="passLength" value="12" min="6" max="32" style="width:100%; background:var(--bg-secondary); border:1px solid var(--border); border-radius:8px; padding:12px;">
+                        <button class="send-btn" style="margin-top:12px; width:100%;" onclick="generatePassword()">Générer</button>
+                        <div id="passwordResult" style="margin-top:12px; padding:12px; background:var(--bg-secondary); border-radius:8px; font-family:monospace;"></div>
+                    </div>
+                `;
+            } else if (tool === 'translate') {
+                title.textContent = "🌍 Traduction";
+                body.innerHTML = `
+                    <textarea id="translateText" rows="3" style="width:100%; background:var(--bg-secondary); border:1px solid var(--border); border-radius:8px; padding:12px;" placeholder="Texte à traduire..."></textarea>
+                    <select id="targetLang" style="margin-top:12px; width:100%; background:var(--bg-secondary); border:1px solid var(--border); border-radius:8px; padding:10px;">
+                        <option value="fr">Français</option><option value="en">Anglais</option><option value="es">Espagnol</option><option value="de">Allemand</option><option value="it">Italien</option>
+                    </select>
+                    <button class="send-btn" style="margin-top:12px; width:100%;" onclick="translateText()">Traduire</button>
+                    <div id="translateResult" style="margin-top:12px; padding:12px; background:var(--bg-secondary); border-radius:8px;"></div>
+                `;
+            } else if (tool === 'analyzer') {
+                title.textContent = "🔍 Analyse de code";
+                body.innerHTML = `
+                    <textarea id="codeToAnalyze" rows="5" style="width:100%; background:var(--bg-secondary); border:1px solid var(--border); border-radius:8px; padding:12px;" placeholder="Collez votre code ici..."></textarea>
+                    <button class="send-btn" style="margin-top:12px; width:100%;" onclick="analyzeCode()">Analyser</button>
+                    <div id="analysisResult" style="margin-top:12px; padding:12px; background:var(--bg-secondary); border-radius:8px;"></div>
+                `;
             }
-            
-            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-            recognition = new SpeechRecognition();
-            recognition.lang = "fr-FR";
-            recognition.continuous = false;
-            
-            const micBtn = document.getElementById("micBtn");
-            const listeningStatus = document.getElementById("listeningStatus");
-            
-            micBtn.classList.add("recording");
-            micBtn.innerHTML = '<i class="fas fa-microphone-slash"></i> Écoute...';
-            listeningStatus.innerHTML = "🎙️ Je vous écoute...";
-            
-            recognition.onresult = async (event) => {
-                const text = event.results[0][0].transcript;
-                listeningStatus.innerHTML = `🎤 "${text}"`;
-                micBtn.classList.remove("recording");
-                micBtn.innerHTML = '<i class="fas fa-microphone"></i> Parler à l\'IA';
-                await processUserMessage(text);
-                setTimeout(() => listeningStatus.innerHTML = "", 2000);
-            };
-            
-            recognition.onerror = () => {
-                micBtn.classList.remove("recording");
-                micBtn.innerHTML = '<i class="fas fa-microphone"></i> Parler à l\'IA';
-                listeningStatus.innerHTML = "❌ Erreur, réessayez";
-                setTimeout(() => listeningStatus.innerHTML = "", 2000);
-            };
-            
-            recognition.start();
+            modal.style.display = "flex";
         }
         
-        async function sendTextMessage() {
-            const input = document.getElementById("textInput");
-            const message = input.value.trim();
-            if (!message) return;
-            input.value = "";
-            await processUserMessage(message);
+        function closeModal() {
+            document.getElementById("toolModal").style.display = "none";
         }
         
-        // Chargement initial
-        document.getElementById("groqApiKey").value = GROQ_API_KEY;
-        document.getElementById("ollamaUrl").value = OLLAMA_URL;
-        document.getElementById("openrouterKey").value = OPENROUTER_KEY;
+        // Fonctions outils
+        let timerInterval;
+        window.startTimer = function(minutes) {
+            if (timerInterval) clearInterval(timerInterval);
+            let time = minutes * 60;
+            const display = document.getElementById("timerDisplay");
+            timerInterval = setInterval(() => {
+                const mins = Math.floor(time / 60);
+                const secs = time % 60;
+                display.textContent = `${mins.toString().padStart(2,'0')}:${secs.toString().padStart(2,'0')}`;
+                if (time <= 0) { clearInterval(timerInterval); alert("⏰ Temps écoulé !"); }
+                time--;
+            }, 1000);
+        };
+        window.stopTimer = function() { if (timerInterval) clearInterval(timerInterval); };
+        window.calculate = function() {
+            try {
+                const result = eval(document.getElementById("calcInput").value);
+                document.getElementById("calcResult").innerHTML = `= ${result}`;
+            } catch(e) { document.getElementById("calcResult").innerHTML = "Erreur de calcul"; }
+        };
+        window.generatePassword = function() {
+            const length = parseInt(document.getElementById("passLength").value);
+            const upper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            const lower = "abcdefghijklmnopqrstuvwxyz";
+            const numbers = "0123456789";
+            const symbols = "!@#$%^&*()_+";
+            let chars = lower;
+            if (document.getElementById("useUpper").checked) chars += upper;
+            if (document.getElementById("useNumbers").checked) chars += numbers;
+            if (document.getElementById("useSymbols").checked) chars += symbols;
+            let password = "";
+            for (let i = 0; i < length; i++) password += chars[Math.floor(Math.random() * chars.length)];
+            document.getElementById("passwordResult").innerHTML = password;
+        };
+        window.generateCode = async function() {
+            const prompt = document.getElementById("codePrompt").value;
+            const lang = document.getElementById("codeLang").value;
+            document.getElementById("codeResult").innerHTML = "⏳ Génération...";
+            try {
+                const res = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+                    method: "POST", headers: { "Authorization": `Bearer ${GROQ_API_KEY}`, "Content-Type": "application/json" },
+                    body: JSON.stringify({ model: "llama-3.3-70b-versatile", messages: [{ role: "user", content: `Génère du code ${lang} pour: ${prompt}. Réponds uniquement avec le code.` }], temperature: 0.7, max_tokens: 2048 })
+                });
+                const data = await res.json();
+                let code = data.choices[0].message.content.replace(/```\w*\n?/g, '').replace(/```/g, '');
+                document.getElementById("codeResult").innerHTML = code;
+            } catch(e) { document.getElementById("codeResult").innerHTML = `Erreur: ${e.message}`; }
+        };
+        window.translateText = async function() {
+            const text = document.getElementById("translateText").value;
+            const lang = document.getElementById("targetLang").value;
+            document.getElementById("translateResult").innerHTML = "⏳ Traduction...";
+            try {
+                const res = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+                    method: "POST", headers: { "Authorization": `Bearer ${GROQ_API_KEY}`, "Content-Type": "application/json" },
+                    body: JSON.stringify({ model: "llama-3.3-70b-versatile", messages: [{ role: "user", content: `Traduis en ${lang}: "${text}". Réponds uniquement avec la traduction.` }], temperature: 0.3, max_tokens: 500 })
+                });
+                const data = await res.json();
+                document.getElementById("translateResult").innerHTML = data.choices[0].message.content;
+            } catch(e) { document.getElementById("translateResult").innerHTML = `Erreur: ${e.message}`; }
+        };
+        window.analyzeCode = async function() {
+            const code = document.getElementById("codeToAnalyze").value;
+            document.getElementById("analysisResult").innerHTML = "⏳ Analyse...";
+            try {
+                const res = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+                    method: "POST", headers: { "Authorization": `Bearer ${GROQ_API_KEY}`, "Content-Type": "application/json" },
+                    body: JSON.stringify({ model: "llama-3.3-70b-versatile", messages: [{ role: "user", content: `Analyse ce code: bugs, optimisations, suggestions.\n${code}` }], temperature: 0.5, max_tokens: 1024 })
+                });
+                const data = await res.json();
+                document.getElementById("analysisResult").innerHTML = data.choices[0].message.content.replace(/\n/g, '<br>');
+            } catch(e) { document.getElementById("analysisResult").innerHTML = `Erreur: ${e.message}`; }
+        };
         
-        window.speakLastResponse = speakLastResponse;
+        userInput.addEventListener("input", function() { this.style.height = "auto"; this.style.height = Math.min(120, this.scrollHeight) + "px"; });
+        updateConvList();
+        renderMessages();
+        userInput.focus();
     </script>
 </body>
 </html>
