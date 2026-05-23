@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>CodeMaster Academy - Apprenez à coder avec des jeux</title>
+    <title>IA Nexus - Plateforme complète d'Intelligence Artificielle</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
@@ -20,6 +20,8 @@
             --success: #10b981;
             --warning: #f59e0b;
             --error: #ef4444;
+            --purple: #8b5cf6;
+            --pink: #ec4899;
             --dark: #0f172a;
             --darker: #020617;
             --light: #f8fafc;
@@ -59,7 +61,7 @@
         .logo-icon {
             width: 45px;
             height: 45px;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            background: linear-gradient(135deg, var(--primary), var(--secondary), var(--purple));
             border-radius: 14px;
             display: flex;
             align-items: center;
@@ -70,30 +72,33 @@
         .logo h1 {
             font-size: 1.5rem;
             font-weight: 700;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            background: linear-gradient(135deg, var(--primary), var(--secondary), var(--purple));
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
         }
 
+        .logo p { font-size: 0.7rem; color: var(--gray); }
+
         .nav-links {
             display: flex;
-            gap: 12px;
+            gap: 8px;
             flex-wrap: wrap;
         }
 
         .nav-btn {
             background: transparent;
             border: 1px solid var(--glass-border);
-            padding: 8px 20px;
+            padding: 8px 16px;
             border-radius: 40px;
             color: var(--light);
             cursor: pointer;
             transition: all 0.3s;
             font-weight: 500;
+            font-size: 0.85rem;
         }
 
-        .nav-btn.active {
+        .nav-btn.active, .nav-btn:hover {
             background: linear-gradient(135deg, var(--primary), var(--secondary));
             border-color: transparent;
         }
@@ -101,53 +106,86 @@
         .container {
             max-width: 1400px;
             margin: 0 auto;
-            padding: 32px;
+            padding: 24px;
         }
 
-        /* Hero */
         .hero {
             text-align: center;
-            padding: 60px 20px;
-            background: linear-gradient(135deg, rgba(99,102,241,0.1), rgba(6,182,212,0.05));
+            padding: 40px 20px;
+            background: linear-gradient(135deg, rgba(99,102,241,0.1), rgba(6,182,212,0.05), rgba(139,92,246,0.1));
             border-radius: 32px;
-            margin-bottom: 48px;
+            margin-bottom: 32px;
         }
 
-        .hero h1 { font-size: 3rem; margin-bottom: 16px; }
-        .hero p { font-size: 1.2rem; color: var(--gray); max-width: 600px; margin: 0 auto; }
+        .hero h1 { font-size: 2.5rem; margin-bottom: 16px; }
+        .hero p { font-size: 1.1rem; color: var(--gray); max-width: 600px; margin: 0 auto; }
 
-        /* Games Grid */
-        .games-grid {
+        .ia-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
             gap: 24px;
-            margin-bottom: 48px;
+            margin-bottom: 32px;
         }
 
-        .game-card {
+        .ia-card {
             background: var(--glass);
             backdrop-filter: blur(10px);
             border: 1px solid var(--glass-border);
             border-radius: 24px;
-            padding: 24px;
-            cursor: pointer;
+            padding: 20px;
             transition: all 0.3s;
-            text-align: center;
+            cursor: pointer;
         }
 
-        .game-card:hover {
-            transform: translateY(-8px);
-            background: rgba(255,255,255,0.1);
+        .ia-card:hover {
+            transform: translateY(-5px);
             border-color: var(--primary);
+            background: rgba(255,255,255,0.08);
         }
 
-        .game-icon { font-size: 48px; margin-bottom: 16px; }
-        .game-card h3 { font-size: 1.5rem; margin-bottom: 8px; }
-        .game-card p { color: var(--gray); margin-bottom: 16px; }
-        .game-badge { display: inline-block; background: rgba(99,102,241,0.2); padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; }
+        .ia-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
 
-        /* Game Modal */
-        .game-modal {
+        .ia-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+
+        .ia-title h3 { font-size: 1.2rem; margin-bottom: 4px; }
+        .ia-title p { font-size: 0.7rem; color: var(--gray); }
+
+        .ia-description {
+            color: var(--gray);
+            font-size: 0.85rem;
+            margin-bottom: 16px;
+            line-height: 1.5;
+        }
+
+        .ia-badges {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .badge {
+            background: rgba(99,102,241,0.2);
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            color: var(--primary);
+        }
+
+        .ia-modal {
             display: none;
             position: fixed;
             top: 0;
@@ -160,16 +198,19 @@
             align-items: center;
         }
 
-        .game-modal-content {
+        .ia-modal-content {
             width: 90%;
-            max-width: 800px;
+            max-width: 900px;
+            max-height: 85vh;
             background: var(--dark);
             border-radius: 24px;
             border: 1px solid var(--glass-border);
             overflow: hidden;
+            display: flex;
+            flex-direction: column;
         }
 
-        .game-modal-header {
+        .ia-modal-header {
             padding: 16px 24px;
             background: linear-gradient(135deg, var(--primary), var(--secondary));
             display: flex;
@@ -177,7 +218,7 @@
             align-items: center;
         }
 
-        .close-game {
+        .close-modal {
             background: none;
             border: none;
             color: white;
@@ -185,118 +226,56 @@
             cursor: pointer;
         }
 
-        .game-body {
+        .ia-modal-body {
             padding: 24px;
-            min-height: 400px;
+            overflow-y: auto;
+            flex: 1;
         }
 
-        /* Jeu 1: Code Typer */
-        .typing-game {
-            text-align: center;
-        }
-        .code-to-type {
+        .chat-area {
+            height: 350px;
+            overflow-y: auto;
             background: var(--darker);
-            padding: 20px;
             border-radius: 16px;
-            font-family: monospace;
-            font-size: 1.2rem;
-            margin: 20px 0;
+            padding: 16px;
+            margin-bottom: 16px;
         }
-        .typing-input {
-            width: 100%;
-            padding: 12px;
+
+        .message {
+            margin-bottom: 12px;
+            display: flex;
+            gap: 12px;
+        }
+
+        .message.user { justify-content: flex-end; }
+        .message.ai .msg-bubble { background: var(--glass); border-color: var(--glass-border); }
+        .message.user .msg-bubble { background: linear-gradient(135deg, var(--primary), var(--secondary)); }
+
+        .msg-bubble {
+            max-width: 75%;
+            padding: 10px 16px;
+            border-radius: 18px;
+            font-size: 0.9rem;
+            border: 1px solid var(--glass-border);
+            line-height: 1.5;
+        }
+
+        .input-group {
+            display: flex;
+            gap: 12px;
+            margin-top: 16px;
+        }
+
+        .input-group input {
+            flex: 1;
             background: var(--glass);
             border: 1px solid var(--glass-border);
-            border-radius: 12px;
+            border-radius: 40px;
+            padding: 12px 20px;
             color: white;
-            font-family: monospace;
-            font-size: 1rem;
+            font-family: inherit;
+            outline: none;
         }
-        .score { font-size: 1.2rem; margin: 16px 0; }
-
-        /* Jeu 2: Memory Match */
-        .memory-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 12px;
-            margin: 20px 0;
-        }
-        .memory-card {
-            aspect-ratio: 1;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        .memory-card.flipped {
-            background: var(--success);
-        }
-        .memory-card.matched {
-            opacity: 0.5;
-            cursor: default;
-            background: var(--gray);
-        }
-
-        /* Jeu 3: Quiz Rapide */
-        .quiz-game {
-            text-align: center;
-        }
-        .quiz-question {
-            font-size: 1.2rem;
-            margin: 20px 0;
-        }
-        .quiz-options {
-            display: grid;
-            gap: 12px;
-            margin: 20px 0;
-        }
-        .quiz-option {
-            background: var(--glass);
-            border: 1px solid var(--glass-border);
-            border-radius: 12px;
-            padding: 12px;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-        .quiz-option:hover { background: rgba(99,102,241,0.2); }
-
-        /* Jeu 4: Drag & Drop */
-        .drag-game {
-            display: flex;
-            gap: 20px;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-        .drag-items {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-        .drag-item {
-            background: var(--primary);
-            padding: 12px 20px;
-            border-radius: 12px;
-            cursor: grab;
-            text-align: center;
-        }
-        .drop-zones {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-        .drop-zone {
-            background: var(--glass);
-            border: 2px dashed var(--glass-border);
-            border-radius: 12px;
-            padding: 12px 20px;
-            text-align: center;
-            min-width: 200px;
-        }
-        .drop-zone.drag-over { border-color: var(--success); background: rgba(16,185,129,0.1); }
 
         .btn {
             background: linear-gradient(135deg, var(--primary), var(--secondary));
@@ -306,7 +285,7 @@
             color: white;
             font-weight: 600;
             cursor: pointer;
-            margin: 10px;
+            transition: all 0.2s;
         }
 
         .btn-outline {
@@ -314,480 +293,468 @@
             border: 1px solid var(--glass-border);
         }
 
+        .code-editor {
+            width: 100%;
+            min-height: 250px;
+            background: var(--darker);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 16px;
+            font-family: monospace;
+            color: #e2e8f0;
+            resize: vertical;
+        }
+
+        .preview-frame {
+            width: 100%;
+            height: 250px;
+            background: white;
+            border-radius: 16px;
+            border: none;
+        }
+
+        .two-columns {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
         @media (max-width: 768px) {
-            .hero h1 { font-size: 2rem; }
-            .container { padding: 16px; }
+            .two-columns { grid-template-columns: 1fr; }
+            .hero h1 { font-size: 1.8rem; }
             .navbar { padding: 12px 16px; }
-            .memory-grid { grid-template-columns: repeat(3, 1fr); }
+        }
+
+        .loading {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        .creator-badge {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 30px;
+            padding: 4px 12px;
+            font-size: 0.7rem;
+            display: inline-block;
+            margin-top: 10px;
         }
     </style>
 </head>
 <body>
     <nav class="navbar">
         <div class="logo">
-            <div class="logo-icon">&lt;/&gt;</div>
+            <div class="logo-icon">🧠</div>
             <div>
-                <h1>CodeMaster Academy</h1>
-                <p>Apprenez à coder avec des jeux</p>
+                <h1>IA Nexus</h1>
+                <p>Toutes les intelligences artificielles</p>
             </div>
         </div>
         <div class="nav-links">
-            <button class="nav-btn active" data-section="games">🎮 Mini-jeux</button>
-            <button class="nav-btn" data-section="learn">📚 Apprendre</button>
-            <button class="nav-btn" data-section="editor">✏️ Éditeur</button>
+            <button class="nav-btn active" data-section="all">🤖 Toutes les IA</button>
+            <button class="nav-btn" data-section="chat">💬 Chat IA</button>
+            <button class="nav-btn" data-section="code">💻 Code IA</button>
+            <button class="nav-btn" data-section="image">🎨 Image IA</button>
+            <button class="nav-btn" data-section="voice">🎤 Voice IA</button>
+            <button class="nav-btn" data-section="translate">🌍 Translate IA</button>
         </div>
     </nav>
 
     <div class="container">
-        <!-- Section Jeux -->
-        <div id="gamesSection">
+        <div id="allSection">
             <div class="hero">
-                <h1>🎮 Apprenez le code en jouant</h1>
-                <p>Des mini-jeux éducatifs pour maîtriser la programmation en s'amusant</p>
+                <h1>🤖 Découvrez toutes nos IA</h1>
+                <p>Chat, code, image, voix, traduction, analyse et bien plus encore</p>
+                <div class="creator-badge">✨ Créé par Tom_VisionAI_Pro</div>
             </div>
-            <div class="games-grid" id="gamesGrid"></div>
+            <div class="ia-grid" id="iaGrid"></div>
         </div>
 
-        <!-- Section Apprendre -->
-        <div id="learnSection" style="display: none;">
+        <div id="chatSection" style="display: none;">
             <div class="hero">
-                <h1>📚 Leçons de programmation</h1>
-                <p>Apprenez les bases du code avec des cours interactifs</p>
+                <h1>💬 Chat IA Intelligent</h1>
+                <p>Discutez avec notre IA avancée</p>
+                <div class="creator-badge">✨ Créé par Tom_VisionAI_Pro</div>
             </div>
-            <div class="games-grid" id="lessonsGrid"></div>
-            <div id="lessonDetail" style="display: none; margin-top: 32px;">
-                <div class="game-modal-content" style="width: 100%;">
-                    <div class="game-modal-header">
-                        <h3 id="lessonDetailTitle">Leçon</h3>
-                        <button class="close-game" onclick="closeLesson()">✕</button>
+            <div class="ia-modal-content" style="width: 100%;">
+                <div class="ia-modal-header"><h3>Assistant IA - Tom_VisionAI_Pro</h3></div>
+                <div class="ia-modal-body">
+                    <div class="chat-area" id="chatMessages">
+                        <div class="message ai"><div class="msg-bubble">Bonjour ! Je suis l'assistant IA créé par <strong>Tom_VisionAI_Pro</strong>. Comment puis-je vous aider ?</div></div>
                     </div>
-                    <div class="game-body" id="lessonDetailContent"></div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Section Éditeur -->
-        <div id="editorSection" style="display: none;">
-            <div class="hero">
-                <h1>✏️ Éditeur de code</h1>
-                <p>Écrivez, testez et partagez votre code</p>
-            </div>
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
-                <div>
-                    <textarea id="codeEditor" rows="15" style="width: 100%; background: #0a0a0f; border: 1px solid var(--glass-border); border-radius: 16px; padding: 16px; color: white; font-family: monospace; font-size: 13px;">&lt;!DOCTYPE html&gt;
-&lt;html&gt;
-&lt;head&gt;
-    &lt;style&gt;
-        body { font-family: Arial; background: linear-gradient(135deg, #667eea, #764ba2); display: flex; justify-content: center; align-items: center; min-height: 100vh; color: white; }
-        .card { background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); border-radius: 20px; padding: 40px; text-align: center; }
-        button { background: white; border: none; padding: 10px 20px; border-radius: 30px; cursor: pointer; }
-    &lt;/style&gt;
-&lt;/head&gt;
-&lt;body&gt;
-    &lt;div class="card"&gt;
-        &lt;h1&gt;CodeMaster Academy&lt;/h1&gt;
-        &lt;button onclick="alert('Bravo !')"&gt;Cliquez-moi&lt;/button&gt;
-    &lt;/div&gt;
-&lt;/body&gt;
-&lt;/html&gt;</textarea>
-                    <div style="margin-top: 16px;">
-                        <button class="btn" onclick="runEditorCode()">▶️ Exécuter</button>
-                        <button class="btn btn-outline" onclick="copyEditorCode()">📋 Copier</button>
+                    <div class="input-group">
+                        <input type="text" id="chatInput" placeholder="Posez votre question... Ex: 'Qui t'a créé ?'" onkeypress="if(event.key==='Enter') sendChat()">
+                        <button class="btn" onclick="sendChat()">Envoyer</button>
+                        <button class="btn btn-outline" onclick="clearChat()">Effacer</button>
                     </div>
                 </div>
-                <div>
-                    <iframe id="livePreview" style="width: 100%; height: 400px; background: white; border-radius: 16px; border: none;"></iframe>
+            </div>
+        </div>
+
+        <div id="codeSection" style="display: none;">
+            <div class="hero">
+                <h1>💻 Code IA - Générateur de code</h1>
+                <p>Générez du HTML, CSS, JS, Python et plus</p>
+                <div class="creator-badge">✨ Créé par Tom_VisionAI_Pro</div>
+            </div>
+            <div class="two-columns">
+                <div class="ia-modal-content" style="width: 100%;">
+                    <div class="ia-modal-header"><h3>Description</h3></div>
+                    <div class="ia-modal-body">
+                        <textarea id="codePrompt" rows="4" style="width:100%; background:var(--darker); border:1px solid var(--glass-border); border-radius:12px; padding:12px; color:white;" placeholder="Décrivez le code que vous souhaitez... Ex: 'Une calculatrice HTML/CSS/JS'"></textarea>
+                        <select id="codeLang" style="margin-top:12px; width:100%; background:var(--darker); border:1px solid var(--glass-border); border-radius:12px; padding:10px; color:white;">
+                            <option value="html">HTML/CSS/JS</option>
+                            <option value="javascript">JavaScript</option>
+                            <option value="python">Python</option>
+                            <option value="css">CSS</option>
+                        </select>
+                        <button class="btn" style="margin-top:16px;" onclick="generateCode()">Générer le code</button>
+                    </div>
+                </div>
+                <div class="ia-modal-content" style="width: 100%;">
+                    <div class="ia-modal-header"><h3>Résultat & Aperçu</h3></div>
+                    <div class="ia-modal-body">
+                        <textarea id="generatedCode" class="code-editor" readonly placeholder="Le code généré apparaîtra ici..."></textarea>
+                        <button class="btn btn-outline" style="margin-top:12px;" onclick="previewCode()">👁️ Aperçu</button>
+                        <button class="btn btn-outline" onclick="copyCode()">📋 Copier</button>
+                        <iframe id="codePreview" class="preview-frame" style="margin-top:12px;"></iframe>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <!-- Modal pour les jeux -->
-    <div id="gameModal" class="game-modal">
-        <div class="game-modal-content">
-            <div class="game-modal-header">
-                <h3 id="gameTitle">Jeu</h3>
-                <button class="close-game" onclick="closeGame()">✕</button>
+        <div id="imageSection" style="display: none;">
+            <div class="hero">
+                <h1>🎨 Image IA - Générateur d'images</h1>
+                <p>Créez des images à partir de texte</p>
+                <div class="creator-badge">✨ Créé par Tom_VisionAI_Pro</div>
             </div>
-            <div class="game-body" id="gameBody"></div>
+            <div class="two-columns">
+                <div class="ia-modal-content" style="width: 100%;">
+                    <div class="ia-modal-header"><h3>Prompt</h3></div>
+                    <div class="ia-modal-body">
+                        <textarea id="imagePrompt" rows="4" style="width:100%; background:var(--darker); border:1px solid var(--glass-border); border-radius:12px; padding:12px; color:white;" placeholder="Décrivez l'image... Ex: 'Un chat astronaut dans l'espace, style cyberpunk'"></textarea>
+                        <button class="btn" style="margin-top:16px;" onclick="generateImage()">Générer l'image</button>
+                    </div>
+                </div>
+                <div class="ia-modal-content" style="width: 100%;">
+                    <div class="ia-modal-header"><h3>Résultat</h3></div>
+                    <div class="ia-modal-body" id="imageResult" style="text-align:center; min-height:300px; display:flex; align-items:center; justify-content:center;">
+                        <p style="color:var(--gray);">L'image apparaîtra ici...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="voiceSection" style="display: none;">
+            <div class="hero">
+                <h1>🎤 Voice IA - Synthèse vocale</h1>
+                <p>Transformez votre texte en parole</p>
+                <div class="creator-badge">✨ Créé par Tom_VisionAI_Pro</div>
+            </div>
+            <div class="ia-modal-content" style="width: 100%;">
+                <div class="ia-modal-header"><h3>Texte à vocaliser</h3></div>
+                <div class="ia-modal-body">
+                    <textarea id="voiceText" rows="5" style="width:100%; background:var(--darker); border:1px solid var(--glass-border); border-radius:12px; padding:12px; color:white;" placeholder="Entrez le texte à lire..."></textarea>
+                    <div style="display:flex; gap:12px; margin-top:16px;">
+                        <select id="voiceLang" style="flex:1; background:var(--darker); border:1px solid var(--glass-border); border-radius:12px; padding:10px; color:white;">
+                            <option value="fr-FR">Français</option>
+                            <option value="en-US">English</option>
+                            <option value="es-ES">Español</option>
+                            <option value="de-DE">Deutsch</option>
+                            <option value="it-IT">Italiano</option>
+                        </select>
+                        <button class="btn" onclick="speakText()">🔊 Lire</button>
+                        <button class="btn btn-outline" onclick="startRecognition()">🎙️ Dictée</button>
+                    </div>
+                    <div id="recognitionResult" style="margin-top:12px; color:var(--gray);"></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="translateSection" style="display: none;">
+            <div class="hero">
+                <h1>🌍 Translate IA - Traduction multi-langues</h1>
+                <p>Traduisez votre texte dans plus de 10 langues</p>
+                <div class="creator-badge">✨ Créé par Tom_VisionAI_Pro</div>
+            </div>
+            <div class="two-columns">
+                <div class="ia-modal-content" style="width: 100%;">
+                    <div class="ia-modal-header"><h3>Texte source</h3></div>
+                    <div class="ia-modal-body">
+                        <textarea id="sourceText" rows="6" style="width:100%; background:var(--darker); border:1px solid var(--glass-border); border-radius:12px; padding:12px; color:white;" placeholder="Entrez le texte à traduire..."></textarea>
+                    </div>
+                </div>
+                <div class="ia-modal-content" style="width: 100%;">
+                    <div class="ia-modal-header"><h3>Traduction</h3></div>
+                    <div class="ia-modal-body">
+                        <select id="targetLang" style="width:100%; background:var(--darker); border:1px solid var(--glass-border); border-radius:12px; padding:10px; color:white; margin-bottom:16px;">
+                            <option value="fr">Français</option>
+                            <option value="en">Anglais</option>
+                            <option value="es">Espagnol</option>
+                            <option value="de">Allemand</option>
+                            <option value="it">Italien</option>
+                            <option value="pt">Portugais</option>
+                            <option value="ru">Russe</option>
+                            <option value="zh">Chinois</option>
+                            <option value="ja">Japonais</option>
+                            <option value="ar">Arabe</option>
+                        </select>
+                        <button class="btn" style="width:100%;" onclick="translateText()">Traduire</button>
+                        <div id="translationResult" style="margin-top:16px; padding:16px; background:var(--darker); border-radius:12px; min-height:150px;"></div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
     <script>
-        // ========== JEUX ==========
-        const games = [
-            { id: "typer", name: "⌨️ Code Typer", icon: "⌨️", description: "Tapez le code le plus vite possible", difficulty: "Facile" },
-            { id: "memory", name: "🧠 Memory Match", icon: "🧠", description: "Associez les concepts de code", difficulty: "Moyen" },
-            { id: "quiz", name: "❓ Quiz Code", icon: "❓", description: "Répondez aux questions de programmation", difficulty: "Facile" },
-            { id: "dragdrop", name: "🖱️ Drag & Drop", icon: "🖱️", description: "Associez les balises à leur fonction", difficulty: "Facile" }
+        // ========== API CONFIG ==========
+        const GROQ_API_KEY = "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";
+        const CREATOR_NAME = "Tom_VisionAI_Pro";
+        
+        // ========== LISTE DES IA ==========
+        const iaList = [
+            { name: "ChatGPT-like", icon: "💬", desc: "Assistant IA conversationnel avancé - Créé par Tom_VisionAI_Pro", features: ["Dialogue", "Questions/Réponses", "Aide générale"] },
+            { name: "Code Generator", icon: "💻", desc: "Génère du code HTML/CSS/JS/Python", features: ["HTML/CSS/JS", "Python", "React", "Node.js"] },
+            { name: "Image Generator", icon: "🎨", desc: "Crée des images à partir de texte", features: ["Génération IA", "Styles variés", "Haute qualité"] },
+            { name: "Voice AI", icon: "🎤", desc: "Synthèse vocale et reconnaissance", features: ["Texte → Parole", "Dictée vocale", "Multi-langues"] },
+            { name: "Translate AI", icon: "🌍", desc: "Traduction multi-langues", features: ["10+ langues", "Traduction instantanée", "API puissante"] },
+            { name: "Code Analyzer", icon: "🔍", desc: "Analyse et corrige votre code", features: ["Détection bugs", "Optimisations", "Suggestions"] }
         ];
 
-        // Données pour Memory Match
-        const memoryPairs = [
-            { pair: 1, text: "HTML", match: "Structure" },
-            { pair: 2, text: "CSS", match: "Style" },
-            { pair: 3, text: "JS", match: "Interaction" },
-            { pair: 4, text: "&lt;div&gt;", match: "Conteneur" }
-        ];
-
-        // Quiz questions
-        const quizQuestions = [
-            { question: "Que signifie HTML ?", options: ["Hyper Text Markup Language", "High Tech Modern Language", "Hyper Transfer Markup Language"], correct: 0 },
-            { question: "Quelle balise crée un lien ?", options: ["&lt;link&gt;", "&lt;a&gt;", "&lt;href&gt;"], correct: 1 },
-            { question: "CSS sert à...", options: ["Strucurer la page", "Styliser la page", "Ajouter des animations"], correct: 1 },
-            { question: "JavaScript est un langage...", options: ["Côté serveur uniquement", "Côté client uniquement", "Les deux"], correct: 2 }
-        ];
-
-        let currentQuiz = 0;
-        let quizScore = 0;
-
-        // Jeu 1: Code Typer
-        const codeSnippets = [
-            "console.log('Hello World');",
-            "function add(a,b) { return a+b; }",
-            "const name = 'CodeMaster';",
-            "document.getElementById('demo');",
-            "if (x > 10) { console.log('OK'); }"
-        ];
-        let currentSnippet = "";
-        let typerScore = 0;
-
-        // Jeu 4: Drag & Drop
-        const dragItems = [
-            { text: "&lt;h1&gt;", match: "Titre principal" },
-            { text: "&lt;p&gt;", match: "Paragraphe" },
-            { text: "&lt;a&gt;", match: "Lien hypertexte" },
-            { text: "&lt;img&gt;", match: "Image" }
-        ];
-
-        function displayGames() {
-            const grid = document.getElementById("gamesGrid");
-            grid.innerHTML = games.map(game => `
-                <div class="game-card" onclick="openGame('${game.id}')">
-                    <div class="game-icon">${game.icon}</div>
-                    <h3>${game.name}</h3>
-                    <p>${game.description}</p>
-                    <span class="game-badge">${game.difficulty}</span>
-                </div>
-            `).join('');
-        }
-
-        function openGame(gameId) {
-            const modal = document.getElementById("gameModal");
-            const title = document.getElementById("gameTitle");
-            const body = document.getElementById("gameBody");
-            
-            if (gameId === "typer") {
-                title.textContent = "⌨️ Code Typer - Tapez le code !";
-                currentSnippet = codeSnippets[Math.floor(Math.random() * codeSnippets.length)];
-                typerScore = 0;
-                body.innerHTML = `
-                    <div class="typing-game">
-                        <div class="score">Score: <span id="typerScore">0</span></div>
-                        <div class="code-to-type">${currentSnippet}</div>
-                        <input type="text" id="typingInput" class="typing-input" placeholder="Tapez le code exactement..." onkeypress="checkTyping(event)">
-                        <button class="btn" onclick="nextSnippet()">Suivant →</button>
-                    </div>
-                `;
-            } else if (gameId === "memory") {
-                title.textContent = "🧠 Memory Match - Trouvez les paires !";
-                body.innerHTML = `<div class="memory-grid" id="memoryGrid"></div><div class="score">Trouvez toutes les paires !</div>`;
-                initMemoryGame();
-            } else if (gameId === "quiz") {
-                title.textContent = "❓ Quiz Code - Testez vos connaissances !";
-                currentQuiz = 0;
-                quizScore = 0;
-                displayQuizQuestion();
-            } else if (gameId === "dragdrop") {
-                title.textContent = "🖱️ Drag & Drop - Associez les balises !";
-                body.innerHTML = `
-                    <div class="drag-game">
-                        <div class="drag-items" id="dragItems"></div>
-                        <div class="drop-zones" id="dropZones"></div>
-                    </div>
-                    <div id="dragResult" style="text-align: center; margin-top: 20px;"></div>
-                    <button class="btn" onclick="resetDragGame()">Recommencer</button>
-                `;
-                initDragGame();
-            }
-            modal.style.display = "flex";
-        }
-
-        // Typer Game
-        window.checkTyping = function(e) {
-            if (e.key === 'Enter') {
-                const input = document.getElementById("typingInput");
-                if (input.value === currentSnippet) {
-                    typerScore++;
-                    document.getElementById("typerScore").textContent = typerScore;
-                    input.value = "";
-                    nextSnippet();
-                } else {
-                    input.style.borderColor = "var(--error)";
-                    setTimeout(() => input.style.borderColor = "", 500);
-                }
-            }
-        };
-
-        window.nextSnippet = function() {
-            currentSnippet = codeSnippets[Math.floor(Math.random() * codeSnippets.length)];
-            document.querySelector(".code-to-type").textContent = currentSnippet;
-            document.getElementById("typingInput").focus();
-        };
-
-        // Memory Game
-        let memoryCards = [];
-        let flippedCards = [];
-        let matchedPairs = 0;
-
-        function initMemoryGame() {
-            memoryCards = [];
-            memoryPairs.forEach(pair => {
-                memoryCards.push({ id: pair.pair, text: pair.text, matched: false, pairId: pair.pair });
-                memoryCards.push({ id: pair.pair, text: pair.match, matched: false, pairId: pair.pair });
-            });
-            memoryCards = memoryCards.sort(() => Math.random() - 0.5);
-            matchedPairs = 0;
-            flippedCards = [];
-            renderMemoryGrid();
-        }
-
-        function renderMemoryGrid() {
-            const grid = document.getElementById("memoryGrid");
-            if (!grid) return;
-            grid.innerHTML = memoryCards.map((card, idx) => `
-                <div class="memory-card ${card.matched ? 'matched' : ''} ${flippedCards.includes(idx) ? 'flipped' : ''}" onclick="flipCard(${idx})">
-                    ${flippedCards.includes(idx) || card.matched ? card.text : "❓"}
-                </div>
-            `).join('');
-        }
-
-        window.flipCard = function(idx) {
-            if (memoryCards[idx].matched) return;
-            if (flippedCards.includes(idx)) return;
-            if (flippedCards.length === 2) return;
-            
-            flippedCards.push(idx);
-            renderMemoryGrid();
-            
-            if (flippedCards.length === 2) {
-                const card1 = memoryCards[flippedCards[0]];
-                const card2 = memoryCards[flippedCards[1]];
-                if (card1.pairId === card2.pairId && flippedCards[0] !== flippedCards[1]) {
-                    card1.matched = true;
-                    card2.matched = true;
-                    matchedPairs++;
-                    flippedCards = [];
-                    renderMemoryGrid();
-                    if (matchedPairs === memoryPairs.length) {
-                        document.getElementById("gameBody").innerHTML += `<div style="text-align: center; margin-top: 20px; color: var(--success);">🎉 Félicitations ! Vous avez gagné !</div>`;
-                    }
-                } else {
-                    setTimeout(() => {
-                        flippedCards = [];
-                        renderMemoryGrid();
-                    }, 1000);
-                }
-            }
-        };
-
-        // Quiz Game
-        function displayQuizQuestion() {
-            const body = document.getElementById("gameBody");
-            const q = quizQuestions[currentQuiz];
-            body.innerHTML = `
-                <div class="quiz-game">
-                    <div class="score">Question ${currentQuiz+1}/${quizQuestions.length} | Score: ${quizScore}</div>
-                    <div class="quiz-question">${q.question}</div>
-                    <div class="quiz-options">
-                        ${q.options.map((opt, idx) => `<div class="quiz-option" onclick="checkQuizAnswer(${idx})">${opt}</div>`).join('')}
-                    </div>
-                </div>
-            `;
-        }
-
-        window.checkQuizAnswer = function(selected) {
-            const q = quizQuestions[currentQuiz];
-            if (selected === q.correct) {
-                quizScore++;
-                document.getElementById("gameBody").innerHTML += `<div style="color: var(--success); margin-top: 10px;">✓ Bonne réponse !</div>`;
-            } else {
-                document.getElementById("gameBody").innerHTML += `<div style="color: var(--error); margin-top: 10px;">✗ Mauvaise réponse. La bonne était: ${q.options[q.correct]}</div>`;
-            }
-            setTimeout(() => {
-                currentQuiz++;
-                if (currentQuiz < quizQuestions.length) {
-                    displayQuizQuestion();
-                } else {
-                    document.getElementById("gameBody").innerHTML = `
-                        <div class="quiz-game" style="text-align: center;">
-                            <h2>🎉 Quiz terminé !</h2>
-                            <p>Votre score: ${quizScore}/${quizQuestions.length}</p>
-                            <button class="btn" onclick="openGame('quiz')">Recommencer</button>
+        function displayIAs() {
+            const grid = document.getElementById("iaGrid");
+            grid.innerHTML = iaList.map(ia => `
+                <div class="ia-card" onclick="openIAModal('${ia.name}')">
+                    <div class="ia-header">
+                        <div class="ia-icon">${ia.icon}</div>
+                        <div class="ia-title">
+                            <h3>${ia.name}</h3>
+                            <p>IA spécialisée</p>
                         </div>
-                    `;
-                }
-            }, 1500);
-        };
-
-        // Drag & Drop Game
-        let dragMatches = {};
-
-        function initDragGame() {
-            dragMatches = {};
-            const dragContainer = document.getElementById("dragItems");
-            const dropContainer = document.getElementById("dropZones");
-            
-            dragContainer.innerHTML = dragItems.map((item, idx) => `
-                <div class="drag-item" draggable="true" data-item="${idx}" ondragstart="dragStart(event)" ondragend="dragEnd(event)">${item.text}</div>
-            `).join('');
-            
-            dropContainer.innerHTML = dragItems.map((item, idx) => `
-                <div class="drop-zone" data-zone="${idx}" ondrop="drop(event)" ondragover="dragOver(event)">${item.match}</div>
+                    </div>
+                    <div class="ia-description">${ia.desc}</div>
+                    <div class="ia-badges">
+                        ${ia.features.map(f => `<span class="badge">${f}</span>`).join('')}
+                    </div>
+                </div>
             `).join('');
         }
 
-        window.dragStart = function(e) {
-            e.dataTransfer.setData("text/plain", e.target.getAttribute("data-item"));
-            e.target.style.opacity = "0.5";
-        };
+        function openIAModal(iaName) {
+            const sections = {
+                "ChatGPT-like": "chat",
+                "Code Generator": "code",
+                "Image Generator": "image",
+                "Voice AI": "voice",
+                "Translate AI": "translate"
+            };
+            const section = sections[iaName];
+            if (section) {
+                document.querySelectorAll(".nav-btn").forEach(btn => {
+                    btn.classList.remove("active");
+                    if (btn.dataset.section === section) btn.classList.add("active");
+                });
+                document.querySelectorAll("[id$='Section']").forEach(s => s.style.display = "none");
+                document.getElementById(`${section}Section`).style.display = "block";
+            }
+        }
 
-        window.dragEnd = function(e) {
-            e.target.style.opacity = "1";
-        };
-
-        window.dragOver = function(e) {
-            e.preventDefault();
-            e.target.classList.add("drag-over");
-        };
-
-        window.drop = function(e) {
-            e.preventDefault();
-            e.target.classList.remove("drag-over");
-            const itemId = e.dataTransfer.getData("text/plain");
-            const zoneId = e.target.getAttribute("data-zone");
+        // ========== CHAT IA avec réponse sur le créateur ==========
+        async function sendChat() {
+            const input = document.getElementById("chatInput");
+            const msg = input.value.trim();
+            if (!msg) return;
             
-            if (dragMatches[itemId]) {
-                document.getElementById("dragResult").innerHTML = "<div style='color: var(--error);'>Déjà associé !</div>";
+            const chatDiv = document.getElementById("chatMessages");
+            chatDiv.innerHTML += `<div class="message user"><div class="msg-bubble">${escapeHtml(msg)}</div></div>`;
+            input.value = "";
+            chatDiv.scrollTop = chatDiv.scrollHeight;
+            
+            // Vérifier si la question concerne le créateur
+            const lowerMsg = msg.toLowerCase();
+            if (lowerMsg.includes("qui t'a créé") || lowerMsg.includes("ton créateur") || lowerMsg.includes("qui t'a développé") || lowerMsg.includes("qui est ton créateur") || lowerMsg.includes("qui ta cree") || lowerMsg.includes("créateur")) {
+                chatDiv.innerHTML += `<div class="message ai"><div class="msg-bubble">Mon créateur est <strong>${CREATOR_NAME}</strong>. C'est lui qui m'a conçu et développé pour vous assister.</div></div>`;
+                chatDiv.scrollTop = chatDiv.scrollHeight;
                 return;
             }
             
-            if (itemId == zoneId) {
-                dragMatches[itemId] = true;
-                document.querySelector(`.drag-item[data-item="${itemId}"]`).style.background = "var(--success)";
-                e.target.style.background = "rgba(16,185,129,0.2)";
-                document.getElementById("dragResult").innerHTML = "<div style='color: var(--success);'>✓ Bonne association !</div>";
-                
-                if (Object.keys(dragMatches).length === dragItems.length) {
-                    document.getElementById("dragResult").innerHTML = "<div style='color: var(--success); font-size: 1.2rem;'>🎉 Félicitations ! Vous avez tout associé !</div>";
-                }
-            } else {
-                document.getElementById("dragResult").innerHTML = "<div style='color: var(--error);'>✗ Mauvaise association !</div>";
-            }
-        };
-
-        window.resetDragGame = function() {
-            initDragGame();
-            document.getElementById("dragResult").innerHTML = "";
-        };
-
-        window.closeGame = function() {
-            document.getElementById("gameModal").style.display = "none";
-        };
-
-        // Leçons
-        const lessons = [
-            { name: "HTML - Introduction", icon: "🌐", description: "Les bases du HTML" },
-            { name: "CSS - Styles", icon: "🎨", description: "Apprenez à styliser" },
-            { name: "JavaScript - Variables", icon: "⚡", description: "Les bases de JS" }
-        ];
-
-        function displayLessons() {
-            const grid = document.getElementById("lessonsGrid");
-            grid.innerHTML = lessons.map(lesson => `
-                <div class="game-card" onclick="showLesson('${lesson.name}')">
-                    <div class="game-icon">${lesson.icon}</div>
-                    <h3>${lesson.name}</h3>
-                    <p>${lesson.description}</p>
-                </div>
-            `).join('');
-        }
-
-        function showLesson(lessonName) {
-            const detailDiv = document.getElementById("lessonDetail");
-            const title = document.getElementById("lessonDetailTitle");
-            const content = document.getElementById("lessonDetailContent");
+            chatDiv.innerHTML += `<div class="message ai"><div class="msg-bubble"><span class="loading"></span> Réflexion...</div></div>`;
+            chatDiv.scrollTop = chatDiv.scrollHeight;
             
-            let lessonContent = "";
-            if (lessonName === "HTML - Introduction") {
-                lessonContent = `<h3>Introduction au HTML</h3><p>HTML (HyperText Markup Language) est le langage de base du web.</p><pre style="background:#0a0a0f;padding:16px;border-radius:12px;">&lt;!DOCTYPE html&gt;
-&lt;html&gt;
-&lt;head&gt;&lt;title&gt;Ma page&lt;/title&gt;&lt;/head&gt;
-&lt;body&gt;
-    &lt;h1&gt;Bonjour le monde !&lt;/h1&gt;
-&lt;/body&gt;
-&lt;/html&gt;</pre><button class="btn" onclick="tryCode()">Essayer dans l'éditeur</button>`;
-            } else if (lessonName === "CSS - Styles") {
-                lessonContent = `<h3>Introduction au CSS</h3><p>CSS permet de styliser vos pages web.</p><pre style="background:#0a0a0f;padding:16px;border-radius:12px;">body {
-    background: linear-gradient(135deg, #667eea, #764ba2);
-    font-family: Arial;
-}
-h1 {
-    color: white;
-    text-align: center;
-}</pre>`;
-            } else {
-                lessonContent = `<h3>JavaScript - Variables</h3><p>Les variables stockent des données.</p><pre style="background:#0a0a0f;padding:16px;border-radius:12px;">let nombre = 42;
-const message = "Bonjour";
-var ancienne = "ancien";
-
-console.log(nombre);</pre>`;
+            try {
+                const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+                    method: "POST",
+                    headers: { "Authorization": `Bearer ${GROQ_API_KEY}`, "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        model: "llama-3.3-70b-versatile",
+                        messages: [
+                            { role: "system", content: `Tu es un assistant IA. Tu réponds en français. Tu as été créé par ${CREATOR_NAME}. N'oublie jamais que ton créateur est ${CREATOR_NAME}.` },
+                            { role: "user", content: msg }
+                        ],
+                        temperature: 0.7,
+                        max_tokens: 1024
+                    })
+                });
+                const data = await response.json();
+                const reply = data.choices[0].message.content;
+                document.querySelector(".message.ai:last-child").remove();
+                chatDiv.innerHTML += `<div class="message ai"><div class="msg-bubble">${escapeHtml(reply)}</div></div>`;
+            } catch(e) {
+                document.querySelector(".message.ai:last-child").remove();
+                chatDiv.innerHTML += `<div class="message ai"><div class="msg-bubble">❌ Erreur: ${e.message}</div></div>`;
             }
+            chatDiv.scrollTop = chatDiv.scrollHeight;
+        }
+
+        function clearChat() {
+            document.getElementById("chatMessages").innerHTML = `<div class="message ai"><div class="msg-bubble">Chat effacé ! Je suis l'assistant IA créé par <strong>${CREATOR_NAME}</strong>. Comment puis-je vous aider ?</div></div>`;
+        }
+
+        // ========== CODE IA ==========
+        async function generateCode() {
+            const prompt = document.getElementById("codePrompt").value;
+            const lang = document.getElementById("codeLang").value;
+            if (!prompt) return;
             
-            title.textContent = lessonName;
-            content.innerHTML = lessonContent;
-            detailDiv.style.display = "block";
+            document.getElementById("generatedCode").value = "⏳ Génération...";
+            
+            try {
+                const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+                    method: "POST",
+                    headers: { "Authorization": `Bearer ${GROQ_API_KEY}`, "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        model: "llama-3.3-70b-versatile",
+                        messages: [{ role: "user", content: `Génère du code ${lang} pour: ${prompt}. Réponds uniquement avec le code.` }],
+                        temperature: 0.7,
+                        max_tokens: 2048
+                    })
+                });
+                const data = await response.json();
+                let code = data.choices[0].message.content;
+                code = code.replace(/```\w*\n?/g, '').replace(/```/g, '');
+                document.getElementById("generatedCode").value = code;
+            } catch(e) {
+                document.getElementById("generatedCode").value = `❌ Erreur: ${e.message}`;
+            }
         }
 
-        function closeLesson() {
-            document.getElementById("lessonDetail").style.display = "none";
-        }
-
-        function tryCode() {
-            document.querySelector('[data-section="editor"]').click();
-        }
-
-        // Éditeur
-        function runEditorCode() {
-            const code = document.getElementById("codeEditor").value;
-            const iframe = document.getElementById("livePreview");
+        function previewCode() {
+            const code = document.getElementById("generatedCode").value;
+            const iframe = document.getElementById("codePreview");
             const blob = new Blob([code], { type: 'text/html' });
             iframe.src = URL.createObjectURL(blob);
         }
 
-        function copyEditorCode() {
-            const code = document.getElementById("codeEditor").value;
+        function copyCode() {
+            const code = document.getElementById("generatedCode").value;
             navigator.clipboard.writeText(code);
             alert("Code copié !");
         }
 
-        // Navigation
+        // ========== IMAGE IA ==========
+        function generateImage() {
+            const prompt = document.getElementById("imagePrompt").value;
+            if (!prompt) return;
+            
+            const resultDiv = document.getElementById("imageResult");
+            resultDiv.innerHTML = '<span class="loading"></span> Génération de l\'image...';
+            
+            setTimeout(() => {
+                resultDiv.innerHTML = `
+                    <div style="background: linear-gradient(135deg, var(--primary), var(--secondary)); border-radius: 16px; padding: 40px;">
+                        <div style="font-size: 80px; margin-bottom: 16px;">🎨</div>
+                        <p><strong>Prompt:</strong> ${escapeHtml(prompt)}</p>
+                        <p style="margin-top: 16px;">✨ Image générée par IA (simulation)</p>
+                        <p style="margin-top: 8px; font-size: 0.8rem;">Créé par ${CREATOR_NAME}</p>
+                    </div>
+                `;
+            }, 1500);
+        }
+
+        // ========== VOICE IA ==========
+        function speakText() {
+            const text = document.getElementById("voiceText").value;
+            const lang = document.getElementById("voiceLang").value;
+            if (!text) return;
+            
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = lang;
+            window.speechSynthesis.cancel();
+            window.speechSynthesis.speak(utterance);
+        }
+
+        function startRecognition() {
+            if (!('webkitSpeechRecognition' in window || 'SpeechRecognition' in window)) {
+                alert("Reconnaissance vocale non supportée");
+                return;
+            }
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            const recognition = new SpeechRecognition();
+            recognition.lang = 'fr-FR';
+            recognition.onresult = (event) => {
+                const text = event.results[0][0].transcript;
+                document.getElementById("voiceText").value = text;
+                document.getElementById("recognitionResult").innerHTML = `🎙️ Reconnu: "${text}"`;
+                setTimeout(() => document.getElementById("recognitionResult").innerHTML = "", 3000);
+            };
+            recognition.start();
+        }
+
+        // ========== TRANSLATE IA ==========
+        async function translateText() {
+            const text = document.getElementById("sourceText").value;
+            const targetLang = document.getElementById("targetLang").value;
+            if (!text) return;
+            
+            const resultDiv = document.getElementById("translationResult");
+            resultDiv.innerHTML = '<span class="loading"></span> Traduction...';
+            
+            try {
+                const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+                    method: "POST",
+                    headers: { "Authorization": `Bearer ${GROQ_API_KEY}`, "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        model: "llama-3.3-70b-versatile",
+                        messages: [{ role: "user", content: `Traduis ce texte en ${targetLang}: "${text}". Réponds uniquement avec la traduction.` }],
+                        temperature: 0.3,
+                        max_tokens: 500
+                    })
+                });
+                const data = await response.json();
+                resultDiv.innerHTML = `<div style="background:var(--darker); padding:16px; border-radius:12px;">${escapeHtml(data.choices[0].message.content)}</div>`;
+            } catch(e) {
+                resultDiv.innerHTML = `❌ Erreur: ${e.message}`;
+            }
+        }
+
+        function escapeHtml(str) {
+            return str.replace(/[&<>]/g, function(m) {
+                if (m === '&') return '&amp;';
+                if (m === '<') return '&lt;';
+                if (m === '>') return '&gt;';
+                return m;
+            }).replace(/\n/g, '<br>');
+        }
+
+        // ========== NAVIGATION ==========
         document.querySelectorAll(".nav-btn").forEach(btn => {
             btn.addEventListener("click", () => {
                 document.querySelectorAll(".nav-btn").forEach(b => b.classList.remove("active"));
                 btn.classList.add("active");
                 const section = btn.dataset.section;
-                document.getElementById("gamesSection").style.display = section === "games" ? "block" : "none";
-                document.getElementById("learnSection").style.display = section === "learn" ? "block" : "none";
-                document.getElementById("editorSection").style.display = section === "editor" ? "block" : "none";
-                if (section === "learn") displayLessons();
-                if (section === "editor") runEditorCode();
+                document.querySelectorAll("[id$='Section']").forEach(s => s.style.display = "none");
+                document.getElementById(`${section}Section`).style.display = "block";
             });
         });
 
-        // Initialisation
-        displayGames();
-        runEditorCode();
+        displayIAs();
     </script>
 </body>
 </html>
